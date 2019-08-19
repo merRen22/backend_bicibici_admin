@@ -9,7 +9,7 @@ module.exports = function (app) {
     });
     app.post("/dashboard", (req,res)=>{
         console.log("Ingresar post");
-       
+        
         
     });
 }

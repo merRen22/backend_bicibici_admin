@@ -37,7 +37,7 @@ exports.pageMenuLogin = function(){
 
 exports.pageMenuHome = function(){
 
-   var ret = '<a href="/">Home</a>';
+   var ret = '<a href="/dashboard">Dashboard</a>';
    ret += '&nbsp&nbsp';
    ret += '<a href="/register">Register</a>';
    ret += '&nbsp&nbsp';

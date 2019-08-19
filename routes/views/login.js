@@ -3,6 +3,7 @@ var aws_util = require('../../util/aws_util');
 
 module.exports = function (app) {
     app.get("/login", (req, res)=>{
+        aws_util.init();
         buildLoginPage(req,res,"");
     });
     app.post("/login", (req,res)=>{
@@ -38,11 +39,10 @@ checkLoginAccount = function(req, resp){
             var user_name = post_data["user_name"];
             // Get password from post data.
             var password = post_data["password"];
-            aws_util.init();
+            
 
             let login = aws_util.Login2(post_data, function(err, result){
                 if(err){
-                    console.log("error");
                     req.user_name = user_name;
                     req.password = password;
                     
