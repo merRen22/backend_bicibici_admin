@@ -10,7 +10,7 @@ function buildLoginPage(req, resp, error_message) {
 
     var page_title = "Home Page";
 
-    var page_menu = http_util.pageMenu();
+    var page_menu = http_util.pageMenuLogin();
 
     var page_content = "<font color='red'>Bienvenidos a BICIBICI .<br/>Click arriba perros.</font>";
 

@@ -26,17 +26,25 @@ exports.getUrlParams = function(req, resp){
 }
 
 /* This function will return web page navigation menu html source code. */
-exports.pageMenu = function(){
+exports.pageMenuLogin = function(){
 
    var ret = '<a href="/">Home</a>';
-   ret += '&nbsp&nbsp';
-   ret += '<a href="/register">Register</a>';
    ret += '&nbsp&nbsp';
    ret += '<a href="/login">Login</a>';
    
    return ret;
 }
 
+exports.pageMenuHome = function(){
+
+   var ret = '<a href="/">Home</a>';
+   ret += '&nbsp&nbsp';
+   ret += '<a href="/register">Register</a>';
+   ret += '&nbsp&nbsp';
+   ret += '<a href="/login">Logout</a>';
+   
+   return ret;
+}
 
 /* This function will use input parameter to replace place holder in the page template file. */
 exports.buildPage = function(page_title, page_menu, page_content){

@@ -17,7 +17,7 @@ exports.registerSubmit = function (req, resp) {
 
     var page_title = "Register Success";
 
-    var page_menu = http_util.pageMenu();
+    var page_menu = http_util.pageMenuHome();
 
     var page_content = "User info registration success.";
 
@@ -34,7 +34,7 @@ function buildRegisterPage(req, resp, error_message) {
 
     var page_title = "Register Page";
 
-    var page_menu = http_util.pageMenu();
+    var page_menu = http_util.pageMenuHome();
 
     var register_form = "<h3>Ingrese datos de Usuario.</h3>";
 

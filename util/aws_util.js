@@ -1,5 +1,3 @@
-
-
 const AmazonCognitoIdentity = require('amazon-cognito-identity-js');
 const CognitoUserPool = AmazonCognitoIdentity.CognitoUserPool;
 const AWS = require('aws-sdk');
@@ -41,6 +39,51 @@ function RegisterUser(){
     });
 }
 
+exports.Login2 = function (body, callback) {
+    var userName = body.user_name;
+    var password = body.password;
+    var authenticationDetails = new AmazonCognitoIdentity.AuthenticationDetails({
+         Username: userName,
+         Password: password
+     });
+     var userData = {
+         Username: userName,
+         Pool: userPool
+     }
+     var cognitoUser = new AmazonCognitoIdentity.CognitoUser(userData);
+     cognitoUser.authenticateUser(authenticationDetails, {
+         onSuccess: function (result) {
+            var accesstoken = result.getAccessToken().getJwtToken();
+            callback(null, accesstoken);
+         },
+         onFailure: function (err) {
+             console.log("ERROR AUTENTIFICACION AWS");
+             console.log(authenticationDetails.Username);
+             console.log(authenticationDetails.Password);
+             console.log(err.message);
+            callback(err);
+        } ,
+        newPasswordRequired: function(userAttributes, requiredAttributes) {
+            // User was signed up by an admin and must provide new 
+            // password and required attributes, if any, to complete 
+            // authentication.
+
+            // userAttributes: object, which is the user's current profile. It will list all attributes that are associated with the user. 
+            // Required attributes according to schema, which don’t have any values yet, will have blank values.
+            // requiredAttributes: list of attributes that must be set by the user along with new password to complete the sign-in.
+
+            
+            // Get these details and call 
+            // newPassword: password that user has given
+            // attributesData: object with key as attribute name and value that the user has given.
+            var newPassword = "Admin1234.";
+            var attributesData = "";
+            cognitoUser.completeNewPasswordChallenge(newPassword, attributesData, this);
+            callback(null);
+         }
+    });
+ }
+ 
 exports.Login= function Login(inputUsername,inputPassword,cb) {
     var authenticationDetails = new AmazonCognitoIdentity.AuthenticationDetails({
         Username : inputUsername,
@@ -68,3 +111,24 @@ exports.Login= function Login(inputUsername,inputPassword,cb) {
 
     });
 }
+
+exports.getCurrentUser = function (callback){
+    var cognitoUser = userPool.getCurrentUser();
+    if (cognitoUser != null) {
+        
+        cognitoUser.getSession(function(err, session) {
+            if (err) {
+                console.log("error current user");
+                console.log(err.message);
+                callback(err);
+            }
+            console.log('session validity: ' + session.isValid());
+            console.log(session.Name);
+            callback(session.Name);
+        });
+
+    }
+}
+
+
+
