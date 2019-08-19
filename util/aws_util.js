@@ -8,9 +8,9 @@ const jwkToPem = require('jwk-to-pem');
 const jwt = require('jsonwebtoken');
 global.fetch = require('node-fetch');
 
-const userPoolId = require("./config").UserPoolId;
-const clientId = require("./config").ClientId;
-const region = require("./config").Region;
+const userPoolId = require("../config").UserPoolId;
+const clientId = require("../config").ClientId;
+const region = require("../config").Region;
 
 const poolData = {    
     UserPoolId : userPoolId,   
