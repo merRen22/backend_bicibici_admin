@@ -8,8 +8,7 @@
     "amazon-cognito-identity-js": "^3.0.15",
     "aws-sdk": "^2.512.0",
     "body-parser": "^1.19.0",
-    "dynamodb": "^1.2.0",
-    "express": "^4.17.1",
+      "express": "^4.17.1",
     "glob": "^7.1.4",
     "jsonwebtoken": "^8.5.1",
     "jwk-to-pem": "^2.0.1",
@@ -28,5 +27,7 @@
     "js"
   ],
   "author": "Renato Mercado Luna && Retto",
-  "license": "ISC"
+  "license": "ISC",
+  "start": "nodemon server.js"
+
 }
