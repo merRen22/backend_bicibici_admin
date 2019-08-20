@@ -18,4 +18,14 @@ var Station = dynamo.define('Station', {
     }
   });
 
-  module.exports=  Station.config({tableName: 'Station'});
+  module.exports.GetModel = function(req,res){
+    var tableName = req.tableName;
+    switch(tableName){
+      case "Station":{
+        res(Station)
+      }
+         break;
+
+    }
+
+  }
