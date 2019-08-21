@@ -8,6 +8,7 @@ dynamo.AWS.config.update({
   accessKeyId: require("../../../backend_bicibici_admin/config").accessKeyId, 
   secretAccessKey: require("../../../backend_bicibici_admin/config").secretAccessKey, 
   region: require("../../../backend_bicibici_admin/config").Region});
+  
 var Station = dynamo.define('Station', {
     hashKey : 'StationID',
    

@@ -9,7 +9,5 @@ module.exports = function(app){
         res.send("😞 Este espacio aun no esta disponible")
     });
     var StationList = require('../../dynamo_api/controllers/listController.js');
-    app.post("/tasks",
-        StationList.create_station
-    );
+    app.post("/tasks", StationList.create_station);
 }
