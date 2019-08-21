@@ -44,7 +44,12 @@ station.save(function (err) {
 });
 }
 
-
+exports.get_all_station = function(req,res) {
+    station.scan()
+    .loadAll()
+    .exec(res);
+  }
+  
 
 
 

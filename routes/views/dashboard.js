@@ -8,11 +8,7 @@ module.exports = function (app) {
         //buildDashboardPage(req,res,"");
         getCurrentUser(req,res);
     });
-    app.post("/task", (req,res)=>{
-        console.log("Ingresar post");
-        dynamo_api.app(req,res);
-        
-    });
+    
 }
 
 function getCurrentUser(req,resp){
