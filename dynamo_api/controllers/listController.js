@@ -1,5 +1,4 @@
 'use strict';
-var AWS = require("aws-sdk");
 var Station = require('../models/listModels.js');
 
 var dynamo = require('dynamodb');
@@ -8,7 +7,7 @@ dynamo.AWS.config.update({
   secretAccessKey: require("../../../backend_bicibici_admin/config").secretAccessKey, 
   region: require("../../../backend_bicibici_admin/config").Region});
 
-var docClient = new AWS.DynamoDB.DocumentClient();
+
 
 
 exports.create_station = function(req,res) {
