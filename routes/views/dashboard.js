@@ -1,5 +1,6 @@
 var http_util = require('../../util/http_util');
 var aws_util = require('../../util/aws_util');
+var dynamo_api = require('../../dynamo_api/routes/listRoutes.js');
 
 module.exports = function (app) {
     app.get("/dashboard", (req, res)=>{
@@ -7,9 +8,9 @@ module.exports = function (app) {
         //buildDashboardPage(req,res,"");
         getCurrentUser(req,res);
     });
-    app.post("/dashboard", (req,res)=>{
+    app.post("/task", (req,res)=>{
         console.log("Ingresar post");
-        
+        dynamo_api.app(req,res);
         
     });
 }
@@ -49,6 +50,11 @@ function buildDashboardPage(req, resp, error_message) {
 
    login_form += "<h3>" + + "</h3>";
 
+   login_form += "<form method='post' action='/task'>" +
+   "User Name : <input type='text' name='user_name' value='{user_name}'/><br/><br/>" +
+   "Password :<input type='password' name='password' value='{password}'/><br/><br/>" +
+   "<input type='submit' value='Login'/><br/><br/>" +
+   "</form>";
     var login_page_data = http_util.buildPage(page_title, page_menu, login_form);
 
     resp.writeHead(200, {'Content-Type':'text/html'});
