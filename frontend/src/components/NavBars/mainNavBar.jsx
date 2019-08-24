@@ -22,7 +22,8 @@ class MainNavbar extends React.Component {
   render() {
     return (
       <>
-        <Navbar
+      
+      <Navbar
           className={classNames("navbar-absolute", this.state.color)}
           expand="lg"
           color={this.state.color}
