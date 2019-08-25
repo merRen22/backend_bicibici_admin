@@ -2,13 +2,6 @@ import React from 'react';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import ReactDOM from 'react-dom';
 
-/*
-toggle() {
-    this.setState(prevState => ({
-      modal: !prevState.modal
-    }));
-  }
-  */
 
 function ModalEditarStation(props){
     if(!props.isOpen){

@@ -7,15 +7,14 @@ import AdminLayout from "../layouts/mainLayout";
 
 import Login from "../pages/loginScreen";
 
-import PanelStations from "../pages/Manager/panelStationContainer";
+import PanelStationContainer from "../pages/Manager/panelStationContainer";
 
 function App(){
   return (<BrowserRouter>
   <Switch>
     <Route exact path={["/panelStations","/panelBikes"]}>
       <MainLayout>
-        <Route path="/panelBikes" component={Login} />
-        <Route path="/panelStations" component={PanelStations} />
+        <Route path="/panelBikes" component={PanelStationContainer} />
       </MainLayout>
     </Route>
     <Route exact path={["/"]}>

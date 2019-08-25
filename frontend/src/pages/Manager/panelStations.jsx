@@ -5,7 +5,6 @@ import { Table, Button, Form, FormGroup, Label, Input } from 'reactstrap';
 
 import ModalEditarStation from "./modalEditarStation";
 
-
 function PanelStations(props){
   return  (<div>
       <br />

@@ -45,8 +45,7 @@ class PanelStationsContainer extends React.Component {
 
       
     return (
-        <PanelStations
-        />
+        <PanelStations></PanelStations>
       );
 
 }
