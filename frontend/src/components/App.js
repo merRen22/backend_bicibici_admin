@@ -10,11 +10,12 @@ import Login from "../pages/loginScreen";
 import PanelStationContainer from "../pages/Manager/panelStationContainer";
 
 function App(){
-  return (<BrowserRouter>
+  return (
+  <BrowserRouter>
   <Switch>
-    <Route exact path={["/panelStations","/panelBikes"]}>
+    <Route path={["/panelStations","/panelBikes"]}>
       <MainLayout>
-        <Route path="/panelBikes" component={PanelStationContainer} />
+        <Route path="/panelStations" component={PanelStationContainer} />
       </MainLayout>
     </Route>
     <Route exact path={["/"]}>
