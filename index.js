@@ -1,5 +1,10 @@
 const express = require("express");
 const app = express();
+var bodyParser = require('body-parser')
+
+
+// parse application/x-www-form-urlencoded
+
 
 require("./routes/views")(app);
 

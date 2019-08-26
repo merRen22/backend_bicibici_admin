@@ -9,6 +9,7 @@ dynamo.AWS.config.update({
 
 
 
+//STATION
 
 exports.create_station = function(req,res) {
 
@@ -44,19 +45,46 @@ var station = new Station(
 });
 }
 
-exports.get_station = function(body,callback) {
-    console.log('created account in DynamoDB');
-   
-    Station.query(body.StationID).exec(function (err, resp) {
+exports.get_station_by_Id = function(req,res) {
+    Station.query(parseInt(req.params.StationID)).exec(function (err, resp) {
         console.log('----------------------------------------------------------------------');
         if(err) {
           console.log('Error running query', err);
         } 
         else{
             console.log(resp.Items);
-            callback.send(resp);
+            res.send(resp);
         }
   });
+}
+
+
+exports.get_station_by_name = function(req,res) {
+
+  Station.scan().where('Address').contains(req.params.StationID).exec(function (err, resp) {
+      console.log('----------------------------------------------------------------------');
+      if(err) {
+        console.log('Error running query', err);
+      } 
+      else{
+          console.log(resp.Items);
+          res.send(resp);
+      }
+});
+}
+
+exports.get_station_by_name2 = function(req,res) {
+  console.log(req.body)
+  Station.scan().where('Address').contains(req.params.StationID).exec(function (err, resp) {
+      console.log('----------------------------------------------------------------------');
+      if(err) {
+        console.log('Error running query', err);
+      } 
+      else{
+          console.log(resp.Items);
+          res.send(resp);
+      }
+});
 }
 
   exports.delete_station = function(req,res) {
@@ -85,6 +113,22 @@ exports.get_station = function(body,callback) {
   });
 }
 
+exports.get_page_station = function(req,res) {
+    console.log(req.params.pageId)
+    Station.scan().limit(req.params.pageId).exec(function (err, resp) {
+        console.log('----------------------------------------------------------------------');
+        if(err) {
+          console.log('Error running query', err);
+        } 
+        else{
+            console.log(resp);
+            res.send(resp.Items)
+        }
+  });
+}
+
+//BIKES
+
 exports.get_all_bikes = function(body,callback) {
    
     Bikes.scan().loadAll().exec(function (err, resp) {
@@ -99,17 +143,16 @@ exports.get_all_bikes = function(body,callback) {
   });
 }
  
-exports.get_bike = function(body,callback) {
-    console.log('created account in DynamoDB');
-   
-    Bikes.query(1).exec(function (err, resp) {
+exports.get_bike = function(req,res) {
+
+    Bikes.query(parseInt(req.params.StationID)).exec(function (err, resp) {
         console.log('----------------------------------------------------------------------');
         if(err) {
           console.log('Error running query', err);
         } 
         else{
-            console.log(resp.Items);
-            callback.send(resp);
+            console.log(resp);
+            res.send(resp);
         }
   });
 }
