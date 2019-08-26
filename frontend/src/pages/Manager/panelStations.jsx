@@ -7,8 +7,6 @@ import {
   FormGroup,
   Label,
   Input,
-  Pagination,
-  PaginationItem
 } from 'reactstrap';
 import { Link } from 'react-router-dom';
 
@@ -80,28 +78,7 @@ function PanelStations(props) {
             </Table>
           </div>
         </div>
-
-        <div className="row vCenterItems">
-
-          <br />
-          <Pagination>
-            {
-              props.dataPages.map(v => {
-                return (<div key={v}>
-                  <PaginationItem>
-                    <button className="btn transparent mr-0">
-                      <h5>{v}</h5>
-                    </button>
-                  </PaginationItem>
-                </div>
-                )
-              })}
-          </Pagination>
-        </div>
       </div>
-
-
-
 
     </div>
 

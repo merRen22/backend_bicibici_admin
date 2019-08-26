@@ -6,9 +6,9 @@ const Joi = require('joi');
 var dynamo = require('dynamodb');
 
 dynamo.AWS.config.update({
-  accessKeyId: require("../../../backend_bicibici_admin/config").accessKeyId, 
-  secretAccessKey: require("../../../backend_bicibici_admin/config").secretAccessKey, 
-  region: require("../../../backend_bicibici_admin/config").Region});
+  accessKeyId: require("../../config.json").accessKeyId, 
+  secretAccessKey: require("../../config.json").secretAccessKey, 
+  region: require("../../config.json").Region});
   
 var Station = dynamo.define('Station', {
     hashKey : 'StationID',

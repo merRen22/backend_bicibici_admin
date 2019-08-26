@@ -3,11 +3,9 @@ var Station = require('../models/Station.js');
 var Bikes = require('../models/Bike.js');
 var dynamo = require('dynamodb');
 dynamo.AWS.config.update({
-  accessKeyId: require("../../../backend_bicibici_admin/config").accessKeyId, 
-  secretAccessKey: require("../../../backend_bicibici_admin/config").secretAccessKey, 
-  region: require("../../../backend_bicibici_admin/config").Region});
-
-
+  accessKeyId: require("../../config").accessKeyId, 
+  secretAccessKey: require("../../config").secretAccessKey, 
+  region: require("../../config").Region});
 
 //STATION
 
