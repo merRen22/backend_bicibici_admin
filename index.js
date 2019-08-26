@@ -1,5 +1,11 @@
 const express = require("express");
 const app = express();
+var bodyParser = require('body-parser')
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+
+// parse application/x-www-form-urlencoded
+
 
 require("./routes/views")(app);
 
