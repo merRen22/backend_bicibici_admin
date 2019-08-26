@@ -9,13 +9,11 @@ module.exports = function(app){
 
     app.post("/stations/create", StationList.create_station);
 
-    app.get("/stations/get/:StationID",StationList.get_station_by_Id);
+    app.post("/stations/get",StationList.get_station_by_Id);
 
     app.get("/stations/list",StationList.get_all_station);   
 
-    app.get("/stations/get/:name",StationList.get_station_by_name);
-
-    app.post("/stations/name",StationList.get_station_by_name2);
+    app.post("/stations/name",StationList.get_station_by_name);
 
     app.get("/stations/page/:pageId",StationList.get_page_station);   
 

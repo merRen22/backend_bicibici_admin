@@ -13,20 +13,20 @@ dynamo.AWS.config.update({
 
 exports.create_station = function(req,res) {
 
-  /*if(!req.body) {
+  if(!req.body) {
     return res.status(400).send({
         message: "Note content can not be empty"
     });
-}*/
+}
 
 // Create a Station
 var station = new Station(
   {
-    StationID : 1,
-    Address   : "Station1",
-    Latitude    : 12121,
-    Longitude     : 1212,
-    TotalSlots   :121,
+    StationID : req.body.StationID,
+    Address   : req.body.Address,
+    Latitude    : req.body.Latitude,
+    Longitude     : req.body.Longitude,
+    TotalSlots   :req.body.TotalSlots,
   }
 );
 
@@ -38,7 +38,7 @@ var station = new Station(
         }
         else
         {
-            res.send('created account in DynamoDB', station.get('StationID'));
+            res.send('created account in DynamoDB');
         }
     
   
@@ -46,7 +46,7 @@ var station = new Station(
 }
 
 exports.get_station_by_Id = function(req,res) {
-    Station.query(parseInt(req.params.StationID)).exec(function (err, resp) {
+    Station.query(req.body.StationID).exec(function (err, resp) {
         console.log('----------------------------------------------------------------------');
         if(err) {
           console.log('Error running query', err);
@@ -61,21 +61,7 @@ exports.get_station_by_Id = function(req,res) {
 
 exports.get_station_by_name = function(req,res) {
 
-  Station.scan().where('Address').contains(req.params.StationID).exec(function (err, resp) {
-      console.log('----------------------------------------------------------------------');
-      if(err) {
-        console.log('Error running query', err);
-      } 
-      else{
-          console.log(resp.Items);
-          res.send(resp);
-      }
-});
-}
-
-exports.get_station_by_name2 = function(req,res) {
-  console.log(req.body)
-  Station.scan().where('Address').contains(req.params.StationID).exec(function (err, resp) {
+  Station.scan().where('Address').contains(req.body.Address).exec(function (err, resp) {
       console.log('----------------------------------------------------------------------');
       if(err) {
         console.log('Error running query', err);
