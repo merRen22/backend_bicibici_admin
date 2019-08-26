@@ -37,7 +37,7 @@ function PanelStations(props) {
             <div className="col-4 container">
               <div className="Row">
                 <Button color="primary">Buscar</Button>{' '}
-                <Button color="success">Registrar</Button>{' '}
+                <Link className="btn btn-success" to={`/panelStationsRegistration`}>Registrar</Link>
               </div>
             </div>
 

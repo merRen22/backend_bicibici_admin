@@ -13,14 +13,16 @@ import PanelUsersContainer from "../pages/Manager/panelStationContainer";
 import PanelPlansContainer from "../pages/Manager/panelStationContainer";
 
 import InfoStationContainer from "../pages/Manager/editarStation";
+import RegistrationStationContainer from "../pages/Manager/registrarStation";
 
 function App(){
   return (
   <BrowserRouter>
   <Switch>
-    <Route path={["/panelStations","/panelStationsInfo/:stationID","/panelBikes"]}>
+    <Route path={["/panelStations","/panelStationsInfo/:stationID","/panelStationsRegistration","/panelBikes"]}>
       <ManagerLayout>
         <Route path="/panelStationsInfo/:stationID" component={InfoStationContainer} />
+        <Route path="/panelStationsRegistration" component={RegistrationStationContainer} />
         <Route path="/panelStations" component={PanelStationContainer} />
         <Route path="/panelBikes" component={PanelBikesContainer} />
         <Route path="/panelUsers" component={PanelUsersContainer} />
