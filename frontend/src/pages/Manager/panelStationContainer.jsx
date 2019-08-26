@@ -10,9 +10,11 @@ class PanelStationsContainer extends React.Component {
   state = {
     loading: true,
     error: null,
-    data: undefined,
     modalEditarIsOpen: false,
     modalDeleteIsOpen: false,
+    data: undefined,
+    indexStation:0,
+    dataPages: []
   };
 
   componentDidMount() {
@@ -22,31 +24,23 @@ class PanelStationsContainer extends React.Component {
   fetchData = async () => {
     try {
       const data = await api.stations.list();
-      console.log(data);
-      this.setState({ loading: false, data: data });
+      
+      this.setState({ 
+        loading: false,
+         data: data,
+         dataPages : Array.from({ length: data.pages }, (v, i) => i + 1) });
     } catch (error) {
       this.setState({ loading: false, error: error });
     }
-    /*
-    this.setState({ loading: true, error: null });
-
-    try {
-      const data = await api.badges.read(this.props.match.params.badgeId);
-      this.setState({ loading: false, data: data });
-    } catch (error) {
-      this.setState({ loading: false, error: error });
-    }
-    */
   };
 
   
   handleModalEditar = e => {
-    this.setState({ modalEditarIsOpen: !this.state.modalEditarIsOpen });
+    this.setState({ 
+      modalEditarIsOpen: !this.state.modalEditarIsOpen
+    });
   };
 
-  handleModalEliminar = e => {
-    this.setState({ modalDeleteIsOpen: !this.state.modalDeleteIsOpen });
-  };
 
   render() {
 
@@ -62,6 +56,8 @@ class PanelStationsContainer extends React.Component {
       <PanelStations
         modalEditarIsOpen={this.state.modalEditarIsOpen}
         modalDeleteIsOpen={this.state.modalDeleteIsOpen}
+        data={this.state.data}
+        dataPages={this.state.dataPages}
         toggleModalEditar={this.handleModalEditar}
         toggleModalEliminar={this.handleModalEliminar}
       />

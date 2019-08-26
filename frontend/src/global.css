@@ -79,6 +79,13 @@ a.link-unstyled:hover {
   font-weight: 700;
 }
 
+.h3.h3_white_title {
+  color: #fff;
+  border-color: #fff;
+  font-weight: 700;
+}
+
+
 
 .h1.h1_black_mega_title {
   font-size: 80px;
@@ -90,6 +97,10 @@ a.link-unstyled:hover {
 .vCenterItems {
   display: flex;
   align-items: center;
+}
+
+.transparent {
+  background-color: 'transparent';
 }
 
 #root {
