@@ -9,12 +9,12 @@ import {
   Input,
 } from 'reactstrap';
 import { Link } from 'react-router-dom';
+import StationsList from '../../components/stations/stationsList.jsx'
+import '../../components/styles/List.css'
 
 
 
 function PanelStations(props) {
-  var index = 1;
-  var indexStation = 0;
 
   return (
     <div>
@@ -47,35 +47,9 @@ function PanelStations(props) {
 
         <div className="row">
           <div className="col-12 vCenterItems container">
-            <Table responsive striped>
-              <thead>
-                <tr>
-                  <th>#</th>
-                  <th>Dirección</th>
-                  <th>Latitud</th>
-                  <th>Longitud</th>
-                  <th>Espacios maximos</th>
-                  <th>Fecha de creación</th>
-                  <th></th>
-                </tr>
-              </thead>
-              <tbody>
-                {props.data.stations.map(station => {
-                  return (
-                    <tr key={station.StationID}>
-                      <th>{index++}</th>
-                      <td>{station.Address}</td>
-                      <td>{station.Latitude}</td>
-                      <td>{station.Longitude}</td>
-                      <td>{station.TotalSlots}</td>
-                      <td>{station.createdAt}</td>
-                      <td><Link className="btn btn-info" to={`/panelStationsInfo/${station.StationID}`}>información</Link>
-                      </td>
-                    </tr>
-                  )
-                })}
-              </tbody>
-            </Table>
+<div className="itemsList__container">
+          <StationsList stations={props.data.Items} />
+</div>
           </div>
         </div>
       </div>

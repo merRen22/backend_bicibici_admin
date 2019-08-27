@@ -1,0 +1,19 @@
+.customList ul>li {
+    margin-bottom: 1rem;
+  }
+  
+  .customListItem {
+    background: #FFFFFF;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.23);
+    border-radius: 5px;
+    display: flex;
+    padding: 1rem;
+  }
+
+  
+.itemsList__container {
+  width: 100%;
+  max-width: 580px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
