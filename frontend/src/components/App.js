@@ -19,9 +19,9 @@ function App(){
   return (
   <BrowserRouter>
   <Switch>
-    <Route path={["/panelStations","/panelStationsInfo/:stationID","/panelStationsRegistration","/panelBikes"]}>
+    <Route path={["/panelStations","/panelStationsInfo/:Address","/panelStationsRegistration","/panelBikes"]}>
       <ManagerLayout>
-        <Route path="/panelStationsInfo/:stationID" component={InfoStationContainer} />
+        <Route path="/panelStationsInfo/:Address" component={InfoStationContainer} />
         <Route path="/panelStationsRegistration" component={RegistrationStationContainer} />
         <Route path="/panelStations" component={PanelStationContainer} />
         <Route path="/panelBikes" component={PanelBikesContainer} />

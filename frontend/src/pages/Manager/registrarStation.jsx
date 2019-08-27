@@ -36,7 +36,6 @@ class EditarStation extends React.Component {
       await api.stations.create(this.state.form);
       this.props.history.push('/panelStations')
     } catch (error) {
-      console.log(error)
       this.setState({ loading: false, error: error });
     }
   };

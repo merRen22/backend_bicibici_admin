@@ -18,6 +18,12 @@ class EditarStation extends React.Component {
     error: null,
     modalDeleteIsOpen: false,
     data: undefined,
+    form: {
+      Address: '',
+      TotalSlots: 0,
+      Longitude: 0.0,
+      Latitude: 0.0,
+    },
   };
   
   componentDidMount() {
@@ -26,12 +32,15 @@ class EditarStation extends React.Component {
   
   fetchData = async () => {
     try {
-      const data = await api.stations.read(this.props.match.Address);
-      
-      
+      var addres = { "Address":this.props.match.params.Address}
+      const data = await api.stations.read(addres);
+      this.state.form.Address = data.Address
+      this.state.form.TotalSlots = data.TotalSlots
+      this.state.form.Longitude = data.Longitude
+      this.state.form.Latitude = data.Latitude
       this.setState({ 
         loading: false,
-         data: data
+         data: data.Items[0]
         });
     } catch (error) {
       this.setState({ loading: false, error: error });
@@ -43,12 +52,11 @@ class EditarStation extends React.Component {
       modalDeleteIsOpen: false,
       loading: true,
        error: null });
-       console.log(this.props.match.params.Address)
 
     try {
-      var Address = {Address: this.props.match.params.Address};
-      
+      var Address = {"Address": this.props.match.params.Address};
       const data = await api.stations.remove(Address);
+      
       this.props.history.push('/panelStations')
       /*
       this.setState({ 
@@ -59,6 +67,29 @@ class EditarStation extends React.Component {
     } catch (error) {
       this.setState({ loading: false, error: error });
     }
+  };
+
+  handleSubmit = async e => {
+    e.preventDefault();
+
+    /*
+    this.setState({ loading: true, error: null });
+    try {
+      await api.stations.create(this.state.form);
+      this.props.history.push('/panelStations')
+    } catch (error) {
+      this.setState({ loading: false, error: error });
+    }
+    */
+  };
+  
+  handleChange = e => {
+    this.setState({
+      form: {
+        ...this.state.form,
+        [e.target.name]: e.target.value,
+      },
+    });
   };
   
   editItem = async () => {
@@ -115,35 +146,39 @@ class EditarStation extends React.Component {
         <div className="row">
             
           <FormGroup className="mr-4">
-                  <Label for="direccionEstacion">Dirección</Label>
+                  <Label for="Address">Dirección</Label>
                   <Input 
+                  onChange={this.handleChange}
                   value={this.state.data.Address}
-                  type="direccionEstacion" name="direccionEstacion" id="direccionEstacion" placeholder="dirección" />
+                  type="Address" name="Address" id="Address" placeholder="dirección" />
                 </FormGroup>
                 <br/>
                 
                 <FormGroup>
-                  <Label for="espaciosEstacion">Espacios</Label>
+                  <Label for="v">Espacios</Label>
                   <Input 
+                  onChange={this.handleChange}
                   value={this.state.data.TotalSlots}
-                  type="espaciosEstacion" name="espaciosEstacion" id="espaciosEstacion" placeholder="espacios" />
+                  type="TotalSlots" name="TotalSlots" id="TotalSlots" placeholder="espacios" />
                 </FormGroup>
           </div>
           
           <div className="row">
             
           <FormGroup className="mr-4">
-                  <Label for="latitudEstacion">Latitud</Label>
+                  <Label for="Latitude">Latitud</Label>
                   <Input 
+                  onChange={this.handleChange}
                   value={this.state.data.Latitude}
-                  type="latitudEstacion" name="latitudEstacion" id="latitudEstacion" placeholder="latitud" />
+                  type="Latitude" name="latitudEstacion" id="latitudEstacion" placeholder="latitud" />
                 </FormGroup>
                 
                 <FormGroup>
-                  <Label for="longitudEstacion">Longitud</Label>
+                  <Label for="Longitude">Longitud</Label>
                   <Input 
+                  onChange={this.handleChange}
                   value={this.state.data.Longitude}
-                  type="longitudEstacion" name="longitudEstacion" id="longitudEstacion" placeholder="longitud" />
+                  type="Longitude" name="Longitude" id="Longitude" placeholder="longitud" />
                 </FormGroup>
           </div>
               </Form>

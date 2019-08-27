@@ -10,8 +10,6 @@ async function callApi(endpoint, options = {}) {
   const response = await fetch(url, options);
   const data = await response.json();
 
-  console.log(data);
-
   return data;
 }
 
@@ -27,7 +25,10 @@ const api = {
       });
     },
     read(Address) {
-      callApi(`/stations/${Address}`);
+      return callApi(`/stations/name`,{
+        method:'POST',
+        body: JSON.stringify(Address)
+      });
     },
     update(Address, updates) {
       return callApi(`/badges/${Address}`, {
