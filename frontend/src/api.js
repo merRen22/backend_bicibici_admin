@@ -21,7 +21,7 @@ const api = {
       return callApi('/stations/list');
     },
     create(station) {
-      return callApi(`/badges`, {
+      return callApi(`/stations/create`, {
         method: 'POST',
         body: JSON.stringify(station),
       });
@@ -43,9 +43,10 @@ const api = {
         body: JSON.stringify(updates),
       });
     },
-    remove(stationId) {
-      return callApi(`/badges/${stationId}`, {
-        method: 'DELETE',
+    remove(stationID) {
+      return callApi(`/stations/delete`, {
+        method: 'POST',
+        body: JSON.stringify(stationID),
       });
     },
   },

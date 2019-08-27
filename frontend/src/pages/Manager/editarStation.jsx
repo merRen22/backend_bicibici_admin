@@ -43,21 +43,22 @@ class EditarStation extends React.Component {
       modalDeleteIsOpen: false,
       loading: true,
        error: null });
-    this.props.history.push('/panelStations')
+       console.log(this.props.match.params.stationID)
 
-
-    /*
     try {
-      const data = await api.stations.read(this.props.match.stationID);
+      var StationID = {StationID: parseInt(this.props.match.params.stationID)};
       
+      const data = await api.stations.remove(StationID);
+      this.props.history.push('/panelStations')
+      /*
       this.setState({ 
         loading: false,
          data: data
         });
+        */
     } catch (error) {
       this.setState({ loading: false, error: error });
     }
-    */
   };
   
   editItem = async () => {
