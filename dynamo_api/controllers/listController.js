@@ -72,13 +72,12 @@ exports.get_station_by_name = function(req,res) {
 }
 
   exports.delete_station = function(req,res) {
-
-    /*if(!req.body) {
+    if(!req.body) {
     return res.status(400).send({
         message: "Note content can not be empty"
     });
-}*/
-    Station.destroy(1,function (err) {
+  }
+    Station.destroy(req.body.StationID,function (err) {
         res.send("Estación Eliminada");
       });
   }
