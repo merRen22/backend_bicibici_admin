@@ -6,7 +6,7 @@ module.exports = function(app){
     
     var StationList = require('../controllers/listController.js');
  
-
+    //Station
     app.post("/stations/create", StationList.create_station);
 
     app.post("/stations/get",StationList.get_station_by_Id);
@@ -19,15 +19,26 @@ module.exports = function(app){
 
     app.post("/stations/delete",StationList.delete_station);
 
+    //Bikes
+
     app.get("/bikes/list",StationList.get_all_bikes);  
 
     app.post("/bikes/create", StationList.create_bike);
 
-    app.get("/bikes/get",StationList.get_bike);   
+    app.post("/bikes/get",StationList.get_bike_by_id);   
 
     app.post("/bikes/delete",StationList.delete_bike);
 
-    
+    //Plans
+
+    app.get("/plans/list",StationList.get_all_plans);  
+
+    app.post("/plans/create", StationList.create_plan);
+
+    app.post("/plans/get",StationList.get_plan_by_id);   
+
+    app.post("/plans/delete",StationList.delete_plan);
+
 
     app.get("*", (req,res)=>{
         console.log("showing wildcard")

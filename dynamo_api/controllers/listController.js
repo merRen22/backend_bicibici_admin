@@ -1,6 +1,7 @@
 'use strict';
 var Station = require('../models/Station.js');
 var Bikes = require('../models/Bike.js');
+var Plans = require('../models/Plan.js');
 var dynamo = require('dynamodb');
 dynamo.AWS.config.update({
   accessKeyId: require("../../../backend_bicibici_admin/config").accessKeyId, 
@@ -22,7 +23,7 @@ exports.create_station = function(req,res) {
 // Create a Station
 var station = new Station(
   {
-    StationID : req.body.StationID,
+    //StationID : req.body.StationID,
     Address   : req.body.Address,
     Latitude    : req.body.Latitude,
     Longitude     : req.body.Longitude,
@@ -34,11 +35,11 @@ var station = new Station(
         if(err)
         {
             console.log(err);
-            res.send(err);
+            res.send(JSON.stringify({ message: "Registro Incorrecto" }));
         }
         else
         {
-            res.send('created account in DynamoDB');
+            res.send(JSON.stringify({ message: "Registro Correcto" }));
         }
     
   
@@ -80,7 +81,7 @@ exports.get_station_by_name = function(req,res) {
         message: "Note content can not be empty"
     });
 }*/
-    Station.destroy(1,function (err) {
+    Station.destroy(req.body.StationID,function (err) {
         res.send("Estación Eliminada");
       });
   }
@@ -129,9 +130,9 @@ exports.get_all_bikes = function(body,callback) {
   });
 }
  
-exports.get_bike = function(req,res) {
+exports.get_bike_by_id = function(req,res) {
 
-    Bikes.query(parseInt(req.params.StationID)).exec(function (err, resp) {
+    Bikes.query(req.body.Id).exec(function (err, resp) {
         console.log('----------------------------------------------------------------------');
         if(err) {
           console.log('Error running query', err);
@@ -150,7 +151,7 @@ exports.get_bike = function(req,res) {
         message: "Note content can not be empty"
     });
 }*/
-Bikes.destroy(1,function (err) {
+Bikes.destroy(req.body.Id,function (err) {
         res.send("Estación Eliminada");
       });
   }
@@ -166,12 +167,12 @@ Bikes.destroy(1,function (err) {
   // Create a Station
   var bike = new Bike(
     {
-        Id : 1,
-        IsIntervened : 1,
-        Longuitude : -234324321,
-        Available : 1,
-        IsMoving : 1,
-        Latitude : -234234,
+        Id : req.body.Id,
+        IsIntervened : req.body.IsIntervened,
+        Longuitude : req.body.Longuitude,
+        Available : req.body.Available,
+        IsMoving : req.body.IsMoving,
+        Latitude : req.body.Latitude
 
     }
   );
@@ -180,14 +181,84 @@ Bikes.destroy(1,function (err) {
           if(err)
           {
               console.log(err);
-              res.send(err);
+              res.send(JSON.stringify({ message: "Registro Incorrecto" }));
           }
           else
           {
-              res.send('created account in DynamoDB', bike.get('Id'));
+            res.send(JSON.stringify({ message: "Registro Correcto" }));
           }
       
     
   });
   }
   
+  //PLANS
+
+  exports.get_all_plans = function(body,callback) {
+   
+    Plans.scan().loadAll().exec(function (err, resp) {
+        console.log('----------------------------------------------------------------------');
+        if(err) {
+          console.log('Error running query', err);
+        } 
+        else{
+            console.log(resp.Items);
+            callback.send(resp);
+        }
+  });
+}
+
+exports.get_plan_by_id = function(req,res) {
+
+  Plans.query(req.body.PlanID).exec(function (err, resp) {
+      console.log('----------------------------------------------------------------------');
+      if(err) {
+        console.log('Error running query', err);
+      } 
+      else{
+          console.log(resp);
+          res.send(resp);
+      }
+});
+}
+
+exports.delete_plan = function(req,res) {
+
+Plans.destroy(req.body.PlanID,function (err) {
+      res.send(
+        { message :"Estación Eliminada" });
+    });
+}
+
+exports.create_plan = function(req,res) {
+
+  if(!req.body) {
+    return res.status(400).send({
+        message: "Ingrese los datos del plan"
+    });
+}
+
+// Create a Station
+var plan = new Plan(
+  {
+    PlanID : req.body.PlanID,
+    Cost   : req.body.Cost,
+    Duration    : req.body.Duration
+
+  }
+);
+
+    plan.save(function (err) {
+        if(err)
+        {
+            console.log(err);
+            res.send(JSON.stringify({ message: "Registro Incorrecto" }));
+        }
+        else
+        {
+          res.send(JSON.stringify({ message: "Registro Correcto" }));
+        }
+    
+  
+});
+}
