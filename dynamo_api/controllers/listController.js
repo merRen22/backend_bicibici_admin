@@ -81,7 +81,7 @@ exports.get_station_by_name = function(req,res) {
         message: "Note content can not be empty"
     });
 }*/
-    Station.destroy(req.body.StationID,function (err) {
+    Station.destroy(req.body.Address,function (err) {
         res.send("Estación Eliminada");
       });
   }
