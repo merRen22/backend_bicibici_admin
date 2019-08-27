@@ -10,25 +10,24 @@ dynamo.AWS.config.update({
   secretAccessKey: require("../../../backend_bicibici_admin/config").secretAccessKey, 
   region: require("../../../backend_bicibici_admin/config").Region});
   
-var Station = dynamo.define('Station', {
-    hashKey : 'StationID',
+var Station = dynamo.define('Stations', {
+    hashKey : 'Address',
    
     // add the timestamp attributes (updatedAt, createdAt)
     timestamps : true,
    
     schema : {
-      StationID : Joi.number(),
       Address   : Joi.string(),
       Latitude    : Joi.number(),
       Longitude     : Joi.number(),
       TotalSlots   : Joi.number(),
-      
+      createdAt : Joi.date()
     }
   });
 
   
-  Station.config({tableName: 'Station'});
+  Station.config({tableName: 'Stations'});
 
-  module.exports = dynamo.model("Station",Station);
+  module.exports = dynamo.model("Stations",Station);
 
   

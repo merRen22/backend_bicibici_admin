@@ -9,8 +9,6 @@ module.exports = function(app){
     //Station
     app.post("/stations/create", StationList.create_station);
 
-    app.post("/stations/get",StationList.get_station_by_Id);
-
     app.get("/stations/list",StationList.get_all_station);   
 
     app.post("/stations/name",StationList.get_station_by_name);

@@ -27,7 +27,7 @@ var station = new Station(
     Address   : req.body.Address,
     Latitude    : req.body.Latitude,
     Longitude     : req.body.Longitude,
-    TotalSlots   :req.body.TotalSlots,
+    TotalSlots   :req.body.TotalSlots
   }
 );
 
