@@ -24,7 +24,7 @@ var Plan = dynamo.define('Plan', {
   });
 
   
-  Station.config({tableName: 'Plan'});
+  Plan.config({tableName: 'Plan'});
 
   module.exports = dynamo.model("Plan",Plan);
 
