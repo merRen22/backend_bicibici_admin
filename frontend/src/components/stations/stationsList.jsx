@@ -45,7 +45,7 @@ class StationsListItem extends React.Component {
 
                         
                 <Link className="btn btn-info" 
-                to={`/panelStationsInfo/${this.props.station.StationID}`}>
+                to={`/panelStationsInfo/${this.props.station.Address}`}>
                     información</Link>
 <div className="col-12">
     
@@ -83,7 +83,7 @@ class StationsList extends React.Component {
           <ul className="list-unstyled">
             {this.props.stations.map(obj => {
               return (
-                <li key={obj.StationID}>
+                <li key={obj.Address}>
                     <StationsListItem station={obj} />
                 </li>
               );

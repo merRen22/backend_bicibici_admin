@@ -26,7 +26,7 @@ class EditarStation extends React.Component {
   
   fetchData = async () => {
     try {
-      const data = await api.stations.read(this.props.match.stationID);
+      const data = await api.stations.read(this.props.match.Address);
       
       
       this.setState({ 
@@ -43,12 +43,12 @@ class EditarStation extends React.Component {
       modalDeleteIsOpen: false,
       loading: true,
        error: null });
-       console.log(this.props.match.params.stationID)
+       console.log(this.props.match.params.Address)
 
     try {
-      var StationID = {StationID: parseInt(this.props.match.params.stationID)};
+      var Address = {Address: this.props.match.params.Address};
       
-      const data = await api.stations.remove(StationID);
+      const data = await api.stations.remove(Address);
       this.props.history.push('/panelStations')
       /*
       this.setState({ 
@@ -70,7 +70,7 @@ class EditarStation extends React.Component {
 
     /*
     try {
-      const data = await api.stations.read(this.props.match.stationID);
+      const data = await api.stations.read(this.props.match.Address);
       
       this.setState({ 
         loading: false,

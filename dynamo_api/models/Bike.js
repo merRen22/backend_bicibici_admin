@@ -11,25 +11,26 @@ dynamo.AWS.config.update({
   region: require("../../config.json").Region});
   
 
-  var Bike = dynamo.define('Bike', {
-    hashKey : 'Id',
+  var Bike = dynamo.define('Bicycle', {
+    hashKey : 'BicycleID',
    
     // add the timestamp attributes (updatedAt, createdAt)
     timestamps : true,
    
     schema : {
+      Bicycle : Joi.number(),
       Available : Joi.number(),
       IsIntervened : Joi.number(),
       IsMoving : Joi.number(),
       Latitude : Joi.number(),
-      Longitude : Joi.number(),
+      Longitude : Joi.number()
       
     }
   });
 
   
-  Bike.config({tableName: 'Bike'});
-  module.exports = dynamo.model("Bike",Bike);
+  Bike.config({tableName: 'Bicycle'});
+  module.exports = dynamo.model("Bicycle",Bike);
   
 
   

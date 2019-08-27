@@ -19,7 +19,6 @@ class EditarStation extends React.Component {
     modalDeleteIsOpen: false,
     data: undefined,
     form: {
-      StationID: 11,
       Address: '',
       TotalSlots: 0,
       Longitude: 0.0,

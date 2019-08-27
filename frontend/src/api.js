@@ -26,27 +26,19 @@ const api = {
         body: JSON.stringify(station),
       });
     },
-    read(stationId) {
-      return {
-        "Address": "Station2",
-        "createdAt": "2019-08-22T17:51:48.729Z",
-        "Latitude": 12121,
-        "Longitude": 1212,
-        "StationID": 2,
-        "TotalSlots": 121
-      }
-      //callApi(`/stations/${stationId}`);
+    read(Address) {
+      callApi(`/stations/${Address}`);
     },
-    update(stationId, updates) {
-      return callApi(`/badges/${stationId}`, {
+    update(Address, updates) {
+      return callApi(`/badges/${Address}`, {
         method: 'PUT',
         body: JSON.stringify(updates),
       });
     },
-    remove(stationID) {
+    remove(Address) {
       return callApi(`/stations/delete`, {
         method: 'POST',
-        body: JSON.stringify(stationID),
+        body: JSON.stringify(Address),
       });
     },
   },

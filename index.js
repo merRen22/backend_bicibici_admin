@@ -13,7 +13,6 @@ app.use((req, res, next) => {
 // parse application/x-www-form-urlencoded
 
 
-require("./routes/views")(app);
 
 require("./dynamo_api/routes/listRoutes.js")(app);
 app.listen(3010, ()=>{
