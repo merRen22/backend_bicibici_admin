@@ -4,39 +4,50 @@ var router = express.Router();
 
 module.exports = function(app){
     
-    var StationList = require('../controllers/listController.js');
+    var listController = require('../controllers/listController.js');
  
     //Station
-    app.post("/stations/create", StationList.create_station);
+    app.post("/stations/create", listController.createStation);
 
-    app.get("/stations/list",StationList.get_all_station);   
+    app.post("/stations/update", listController.updateStation);
 
-    app.post("/stations/name",StationList.get_station_by_name);
+    app.get("/stations/list",listController.getStations);   
 
-    app.get("/stations/page/:pageId",StationList.get_page_station);   
+    app.post("/stations/name",listController.getStationByName);
 
-    app.post("/stations/delete",StationList.delete_station);
+    //app.get("/stations/page/:pageId",listController.get_page_station);   
+
+    app.post("/stations/delete",listController.deleteStationByAddress);
 
     //Bikes
 
-    app.get("/bikes/list",StationList.get_all_bikes);  
+    app.get("/bikes/list",listController.get_all_bikes);  
 
-    app.post("/bikes/create", StationList.create_bike);
+    app.post("/bikes/create", listController.create_bike);
 
-    app.post("/bikes/get",StationList.get_bike_by_id);   
+    app.post("/bikes/get",listController.get_bike_by_id);   
 
-    app.post("/bikes/delete",StationList.delete_bike);
+    app.post("/bikes/delete",listController.delete_bike);
 
     //Plans
 
-    app.get("/plans/list",StationList.get_all_plans);  
+    app.get("/plans/list",listController.get_all_plans);  
 
-    app.post("/plans/create", StationList.create_plan);
+    app.post("/plans/create", listController.create_plan);
 
-    app.post("/plans/get",StationList.get_plan_by_id);   
+    app.post("/plans/get",listController.get_plan_by_id);   
 
-    app.post("/plans/delete",StationList.delete_plan);
+    app.post("/plans/delete",listController.delete_plan);
 
+    //Accounts
+
+    app.get("/accounts/list",listController.getAccounts);  
+
+    app.post("/accounts/create", listController.createAccount);
+
+    app.post("/accounts/get",listController.getAccountByType);   
+
+    app.post("/accounts/delete",listController.deleteAccountByEmail);
 
     app.get("*", (req,res)=>{
         res.send({ message :"😞 Este espacio aun no esta disponible" })
