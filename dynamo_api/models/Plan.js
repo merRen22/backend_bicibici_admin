@@ -10,22 +10,23 @@ dynamo.AWS.config.update({
   secretAccessKey: require("../../../backend_bicibici_admin/config").secretAccessKey, 
   region: require("../../../backend_bicibici_admin/config").Region});
   
-var Plan = dynamo.define('Plan', {
-    hashKey : 'PlanID',
+var Plan = dynamo.define('tPlans', {
+    hashKey : 'uuidPlan',
    
     // add the timestamp attributes (updatedAt, createdAt)
     timestamps : true,
    
     schema : {
-      PlanID : Joi.number(),
+      uuidPlan : Joi.string(),
       Cost   : Joi.number(),
-      Duration    : Joi.number()
+      Duration    : Joi.number(),
+      createdAt : Joi.date()
     }
   });
 
   
-  Plan.config({tableName: 'Plans'});
+  Plan.config({tableName: 'tPlans'});
 
-  module.exports = dynamo.model("Plans",Plan);
+  module.exports = dynamo.model("tPlans",Plan);
 
   

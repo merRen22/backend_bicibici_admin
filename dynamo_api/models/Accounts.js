@@ -10,23 +10,25 @@ dynamo.AWS.config.update({
   secretAccessKey: require("../../../backend_bicibici_admin/config").secretAccessKey, 
   region: require("../../../backend_bicibici_admin/config").Region});
   
-var Account = dynamo.define('Accounts', {
-    hashKey : 'Email',
+var Account = dynamo.define('tAccounts', {
+    hashKey : 'uuidAccount',
    
     // add the timestamp attributes (updatedAt, createdAt)
     timestamps : true,
    
     schema : {
-        Email   : Joi.string(),
-        Password    : Joi.string(),
-        TypeAccount : Joi.string(),
-        createdAt : Joi.date()
+        uuidAccount : Joi.string(),
+        email   : Joi.string(),
+        password    : Joi.string(),
+        typeAccount : Joi.string(),
+        createdAt : Joi.date(),
+        updatedAt : Joi.date()
     }
   });
 
   
-  Account.config({tableName: 'Accounts'});
+  Account.config({tableName: 'tAccounts'});
 
-  module.exports = dynamo.model("Accounts",Account);
+  module.exports = dynamo.model("tAccounts",Account);
 
   
