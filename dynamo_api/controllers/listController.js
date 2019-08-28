@@ -1,4 +1,5 @@
 'use strict';
+const uuidv1 = require('uuid/v1');
 var Station = require('../models/Station.js');
 var Bikes = require('../models/Bike.js');
 var Plans = require('../models/Plan.js');
@@ -21,11 +22,11 @@ exports.createStation = function(req,res) {
 // Create a Station
 var station = new Station(
   {
-    //StationID : req.body.StationID,
-    Address   : req.body.Address,
-    Latitude    : req.body.Latitude,
-    Longitude     : req.body.Longitude,
-    TotalSlots   :req.body.TotalSlots
+    uuidStation : uuidv1(),
+    address   : req.body.address,
+    latitude    : req.body.latitude,
+    longitude     : req.body.longitude,
+    totalSlots   :req.body.totalSlots
   }
 );
 
@@ -39,8 +40,6 @@ var station = new Station(
         {
             res.send(JSON.stringify({ message: "Registro Correcto" }));
         }
-    
-  
 });
 }
 
@@ -54,11 +53,11 @@ exports.updateStation = function(req,res) {
 
 // Create a Station
  Station.update({
-    //StationID : req.body.StationID,
-    Address   : req.body.Address,
-    Latitude    : req.body.Latitude,
-    Longitude     : req.body.Longitude,
-    TotalSlots   :req.body.TotalSlots
+    uuidStation : req.body.uuidStation,
+    address   : req.body.address,
+    latitude    : req.body.latitude,
+    longitude     : req.body.longitude,
+    totalSlots   :req.body.totalSlots
   },function (err) {
         if(err)
         {
@@ -74,11 +73,14 @@ exports.updateStation = function(req,res) {
 });
 }
 
-exports.get_station_by_Id = function(req,res) {
-    Station.query(req.body.StationID).exec(function (err, resp) {
+exports.getStationByUuid = function(req,res) {
+    Station.query(req.body.uuidStation).exec(function (err, resp) {
         console.log('----------------------------------------------------------------------');
         if(err) {
           console.log('Error running query', err);
+          res.send({
+            message: "Note content can not be empty"
+        })
         } 
         else{
             console.log(resp.Items);
@@ -88,12 +90,15 @@ exports.get_station_by_Id = function(req,res) {
 }
 
 
-exports.getStationByName = function(req,res) {
+exports.getStationByAddress = function(req,res) {
 
-  Station.scan().where('Address').contains(req.body.Address).exec(function (err, resp) {
+  Station.scan().where('address').contains(req.body.address).exec(function (err, resp) {
       console.log('----------------------------------------------------------------------');
       if(err) {
         console.log('Error running query', err);
+        res.send({
+          message: "Error"
+      })
       } 
       else{
           console.log(resp.Items);
@@ -102,23 +107,59 @@ exports.getStationByName = function(req,res) {
 });
 }
 
+exports.deleteStationByUuid = function(req,res) {
 
-  exports.deleteStationByAddress = function(req,res) {
-
-    if(!req.body) {
-    return res.status(400).send({
-        message: "Note content can not be empty"
-    });
-
-
-}
-    Station.destroy(req.body.Address,function (err) {
-        res.send("Estación Eliminada");
-      });
+  Station.query(req.body.uuidStation).exec(function (err, resp) {
+    if(err) {
+      console.log('Error running query', err);
+      res.send({
+        message: "Ingrese un uuidStation correcto"
+    })
+    } 
+    else{
+      if(resp.Count == "1"){
+          Station.destroy(req.body.uuidStation,function (err) {
+          if(err){
+              res.send({message : "No se pudo eliminar la estación"} );
+          } 
+          else{
+              res.send({message : "Estación Eliminada"} );
+          }
+            });
+        }
+      else{
+        res.send({message : "No existe una estación con el uuid indicado"} );
+        }
   }
+});}
 
+exports.deleteStationByAddress = function(req,res) {
 
-  exports.getStations = function(body,callback) {
+  Station.scan().where('address').contains(req.body.address).exec(function (err, resp) {
+    if(err) {
+      console.log('Error running query', err);
+      res.send({
+        message: "Error buscando la estacion"
+    })
+    } 
+    else{
+      if(resp.Count == "1"){
+          Station.destroy(req.body.uuidStation,function (err) {
+          if(err){
+              res.send({message : "No se pudo eliminar la estación"} );
+          } 
+          else{
+              res.send({message : "Estación Eliminada"} );
+          }
+            });
+        }
+      else{
+        res.send({message : "No existe una estación con la direccion indicada"} );
+        }
+  }
+});}
+
+exports.getStations = function(body,callback) {
     Station.scan().loadAll().exec(function (err, resp) {
         console.log('----------------------------------------------------------------------');
         if(err) {

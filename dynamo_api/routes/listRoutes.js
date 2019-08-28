@@ -13,11 +13,14 @@ module.exports = function(app){
 
     app.get("/stations/list",listController.getStations);   
 
-    app.post("/stations/name",listController.getStationByName);
+    app.post("/stations/list/uuid",listController.getStationByUuid);   
 
-    //app.get("/stations/page/:pageId",listController.get_page_station);   
+    app.post("/stations/list/address",listController.getStationByAddress);
 
-    app.post("/stations/delete",listController.deleteStationByAddress);
+    app.post("/stations/delete/uuid",listController.deleteStationByUuid);
+
+    app.post("/stations/delete/address",listController.deleteStationByAddress);
+    
 
     //Bikes
 
