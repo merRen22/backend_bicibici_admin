@@ -34,10 +34,11 @@ class EditarStation extends React.Component {
     try {
       var addres = { "Address":this.props.match.params.Address}
       const data = await api.stations.read(addres);
-      this.state.form.Address = data.Address
-      this.state.form.TotalSlots = data.TotalSlots
-      this.state.form.Longitude = data.Longitude
-      this.state.form.Latitude = data.Latitude
+      console.log(data)
+      this.state.form.Address = data.Items[0].Address
+      this.state.form.TotalSlots = data.Items[0].TotalSlots
+      this.state.form.Longitude = data.Items[0].Longitude
+      this.state.form.Latitude = data.Items[0].Latitude
       this.setState({ 
         loading: false,
          data: data.Items[0]
@@ -72,15 +73,23 @@ class EditarStation extends React.Component {
   handleSubmit = async e => {
     e.preventDefault();
 
-    /*
-    this.setState({ loading: true, error: null });
+    this.setState({ 
+      loading: true,
+       error: null });
+    
+    //this.props.history.push('/panelStations')
+
     try {
-      await api.stations.create(this.state.form);
-      this.props.history.push('/panelStations')
+      console.log("gaaaaaaaaa")
+      console.log(this.state.form)
+      const data = await api.stations.update(this.state.form);
+      
+      this.setState({ 
+        loading: false,
+        });
     } catch (error) {
       this.setState({ loading: false, error: error });
     }
-    */
   };
   
   handleChange = e => {
@@ -90,27 +99,6 @@ class EditarStation extends React.Component {
         [e.target.name]: e.target.value,
       },
     });
-  };
-  
-  editItem = async () => {
-    this.setState({ 
-      loading: true,
-       error: null });
-    this.props.history.push('/panelStations')
-
-
-    /*
-    try {
-      const data = await api.stations.read(this.props.match.Address);
-      
-      this.setState({ 
-        loading: false,
-         data: data
-        });
-    } catch (error) {
-      this.setState({ loading: false, error: error });
-    }
-    */
   };
   
   handleModalEliminar = e => {
@@ -142,24 +130,24 @@ class EditarStation extends React.Component {
         <br /><br />
 
         
-        <Form>
-        <div className="row">
+        <Form onSubmit={this.handleSubmit}>
+        <div className="row"  >
             
           <FormGroup className="mr-4">
                   <Label for="Address">Dirección</Label>
                   <Input 
                   onChange={this.handleChange}
-                  value={this.state.data.Address}
-                  type="Address" name="Address" id="Address" placeholder="dirección" />
+                  value={this.state.form.Address}
+                  type="text" name="Address" id="Address" placeholder="dirección" />
                 </FormGroup>
                 <br/>
                 
                 <FormGroup>
-                  <Label for="v">Espacios</Label>
+                  <Label for="TotalSlots">Espacios</Label>
                   <Input 
                   onChange={this.handleChange}
-                  value={this.state.data.TotalSlots}
-                  type="TotalSlots" name="TotalSlots" id="TotalSlots" placeholder="espacios" />
+                  defaultValue ={this.state.form.TotalSlots}
+                  type="number" name="TotalSlots" id="TotalSlots" placeholder="espacios" />
                 </FormGroup>
           </div>
           
@@ -169,27 +157,29 @@ class EditarStation extends React.Component {
                   <Label for="Latitude">Latitud</Label>
                   <Input 
                   onChange={this.handleChange}
-                  value={this.state.data.Latitude}
-                  type="Latitude" name="latitudEstacion" id="latitudEstacion" placeholder="latitud" />
+                  defaultValue={this.state.form.Latitude}
+                  type="text" name="Latitude" id="Latitude" placeholder="latitud" />
                 </FormGroup>
                 
                 <FormGroup>
                   <Label for="Longitude">Longitud</Label>
                   <Input 
                   onChange={this.handleChange}
-                  value={this.state.data.Longitude}
-                  type="Longitude" name="Longitude" id="Longitude" placeholder="longitud" />
+                  defaultValue={this.state.form.Longitude}
+                  type="text" name="Longitude" id="Longitude" placeholder="longitud" />
                 </FormGroup>
           </div>
-              </Form>
 
+          
         <div>
         <br /><br />
           <div className="row">
-          <button onClick={this.editItem} className="btn btn-success mr-4">Guardar cambios</button>
-          <button onClick={this.handleModalEliminar} className="btn btn-danger mr-4">Eliminar</button>
+          <button type="submit" className="btn btn-success mr-4">Guardar cambios</button>
+          <button type="button" onClick={this.handleModalEliminar} className="btn btn-danger mr-4">Eliminar</button>
           </div>
         </div>
+              </Form>
+
         <br/>
       </div>
   );

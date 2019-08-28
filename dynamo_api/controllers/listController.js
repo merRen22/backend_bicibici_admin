@@ -10,7 +10,7 @@ dynamo.AWS.config.update({
 
 //STATION
 
-exports.create_station = function(req,res) {
+exports.createStation = function(req,res) {
 
   if(!req.body) {
     return res.status(400).send({
@@ -44,6 +44,36 @@ var station = new Station(
 });
 }
 
+exports.updateStation = function(req,res) {
+
+  if(!req.body) {
+    return res.status(400).send({
+        message: "Note content can not be empty"
+    });
+}
+
+// Create a Station
+ Station.update({
+    //StationID : req.body.StationID,
+    Address   : req.body.Address,
+    Latitude    : req.body.Latitude,
+    Longitude     : req.body.Longitude,
+    TotalSlots   :req.body.TotalSlots
+  },function (err) {
+        if(err)
+        {
+            console.log(err);
+            res.send(JSON.stringify({ message: "Actualización Incorrecta" }));
+        }
+        else
+        {
+            res.send(JSON.stringify({ message: "Actualización Correcta" }));
+        }
+    
+  
+});
+}
+
 exports.get_station_by_Id = function(req,res) {
     Station.query(req.body.StationID).exec(function (err, resp) {
         console.log('----------------------------------------------------------------------');
@@ -58,7 +88,7 @@ exports.get_station_by_Id = function(req,res) {
 }
 
 
-exports.get_station_by_name = function(req,res) {
+exports.getStationByName = function(req,res) {
 
   Station.scan().where('Address').contains(req.body.Address).exec(function (err, resp) {
       console.log('----------------------------------------------------------------------');
@@ -72,7 +102,9 @@ exports.get_station_by_name = function(req,res) {
 });
 }
 
-  exports.delete_station = function(req,res) {
+
+  exports.deleteStationByAddress = function(req,res) {
+
     if(!req.body) {
     return res.status(400).send({
         message: "Note content can not be empty"
@@ -86,7 +118,7 @@ exports.get_station_by_name = function(req,res) {
   }
 
 
-  exports.get_all_station = function(body,callback) {
+  exports.getStations = function(body,callback) {
     Station.scan().loadAll().exec(function (err, resp) {
         console.log('----------------------------------------------------------------------');
         if(err) {
@@ -261,3 +293,95 @@ var plan = new Plan(
   
 });
 }
+
+
+//Accounts
+
+exports.createAccount = function(req,res) {
+
+  if(!req.body) {
+    return res.status(400).send({
+        message: "Account content can not be empty"
+    });
+}
+var account = new Account(
+  {
+        Email   : req.body.Email,
+        Password    : req.body.Password,
+        TypeAccount : req.body.TypeAccount,
+        createdAt : req.body.createdAt
+  }
+);
+
+account.save(function (err) {
+        if(err)
+        {
+            console.log(err);
+            res.send(JSON.stringify({ message: "Registro Incorrecto" }));
+        }
+        else
+        {
+            res.send(JSON.stringify({ message: "Registro Correcto" }));
+        }
+    
+  
+});
+}
+
+exports.getAccountByEmail = function(req,res) {
+    Account.query(req.body.Email).exec(function (err, resp) {
+        console.log('----------------------------------------------------------------------');
+        if(err) {
+          console.log('Error running query', err);
+          res.send({message : "Account not found"})
+        } 
+        else{
+            console.log(resp.Items);
+            res.send(resp);
+        }
+  });
+}
+
+
+exports.getAccountByType = function(req,res) {
+
+  Account.scan().where('TypeAccount').contains(req.body.TypeAccount).exec(function (err, resp) {
+      console.log('----------------------------------------------------------------------');
+      if(err) {
+        console.log('Error running query', err);
+        res.send({message : "Account not found"})
+      } 
+      else{
+          console.log(resp.Items);
+          res.send(resp);
+      }
+});
+}
+
+  exports.deleteAccountByEmail = function(req,res) {
+
+    /*if(!req.body) {
+    return res.status(400).send({
+        message: "Note content can not be empty"
+    });
+}*/
+    Account.destroy(req.body.Address,function (err) {
+        res.send("Estación Eliminada");
+      });
+  }
+
+
+  exports.getAccounts = function(body,callback) {
+    Account.scan().loadAll().exec(function (err, resp) {
+        console.log('----------------------------------------------------------------------');
+        if(err) {
+          console.log('Error running query', err);
+          res.send({message : "Error"})
+        } 
+        else{
+            console.log(resp.Items);
+            callback.send(resp);
+        }
+  });
+}
+

@@ -30,10 +30,10 @@ const api = {
         body: JSON.stringify(Address)
       });
     },
-    update(Address, updates) {
-      return callApi(`/badges/${Address}`, {
-        method: 'PUT',
-        body: JSON.stringify(updates),
+    update(station) {
+      return callApi(`/stations/update`, {
+        method: 'POST',
+        body: JSON.stringify(station),
       });
     },
     remove(Address) {
