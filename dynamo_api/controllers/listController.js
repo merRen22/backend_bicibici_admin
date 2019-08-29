@@ -190,7 +190,7 @@ exports.get_page_station = function(req,res) {
 
 //BIKES
 
-exports.get_all_bikes = function(body,callback) {
+exports.getBikes = function(body,callback) {
    
     Bikes.scan().loadAll().exec(function (err, resp) {
         console.log('----------------------------------------------------------------------');
@@ -204,9 +204,9 @@ exports.get_all_bikes = function(body,callback) {
   });
 }
  
-exports.get_bike_by_id = function(req,res) {
+exports.getBikeByUuid = function(req,res) {
 
-    Bikes.query(req.body.Id).exec(function (err, resp) {
+    Bikes.query(req.body.uuidBike).exec(function (err, resp) {
         console.log('----------------------------------------------------------------------');
         if(err) {
           console.log('Error running query', err);
@@ -218,19 +218,23 @@ exports.get_bike_by_id = function(req,res) {
   });
 }
 
-  exports.delete_bike = function(req,res) {
+exports.deleteBikeByUuid = function(req,res) {
 
     /*if(!req.body) {
     return res.status(400).send({
         message: "Note content can not be empty"
     });
 }*/
-Bikes.destroy(req.body.Id,function (err) {
-        res.send("Estación Eliminada");
+Bikes.destroy(req.body.uuidBike,function (err) {
+    if(err)
+    {
+      res.send( { message : "Error" });
+    }
+        res.send( { message : "Bicileta Eliminada" });
       });
   }
 
-  exports.create_bike = function(req,res) {
+exports.createBike = function(req,res) {
 
     /*if(!req.body) {
       return res.status(400).send({
@@ -241,13 +245,12 @@ Bikes.destroy(req.body.Id,function (err) {
   // Create a Station
   var bike = new Bike(
     {
-        Id : req.body.Id,
-        IsIntervened : req.body.IsIntervened,
-        Longuitude : req.body.Longuitude,
-        Available : req.body.Available,
-        IsMoving : req.body.IsMoving,
-        Latitude : req.body.Latitude
-
+        uuidBike : req.body.uuidBike,
+        isIntervened : req.body.IsIntervened,
+        longuitude : req.body.Longuitude,
+        available : req.body.Available,
+        isMoving : req.body.IsMoving,
+        latitude : req.body.Latitude
     }
   );
   
@@ -265,7 +268,38 @@ Bikes.destroy(req.body.Id,function (err) {
     
   });
   }
+
+exports.updateBike = function(req,res) {
+
+    /*if(!req.body) {
+      return res.status(400).send({
+          message: "Note content can not be empty"
+      });
+  }*/
   
+  // Create a Station
+  
+  Bikes.update({
+        uuidBike : req.body.uuidBike,
+        isIntervened : req.body.IsIntervened,
+        longuitude : req.body.Longuitude,
+        available : req.body.Available,
+        isMoving : req.body.IsMoving,
+        latitude : req.body.Latitude
+  },function (err) {
+    if(err)
+    {
+        console.log(err);
+        res.send(JSON.stringify({ message: "Actualización Incorrecta" }));
+    }
+    else
+    {
+        res.send(JSON.stringify({ message: "Actualización Correcta" }));
+    }
+
+
+});
+}
   //PLANS
 
   exports.get_all_plans = function(body,callback) {
