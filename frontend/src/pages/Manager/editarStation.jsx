@@ -1,7 +1,8 @@
 import React from 'react';
 import {
   Form,
-  FormGroup, Modal,
+  FormGroup,
+  Alert,
   Label,
   Input, } from 'reactstrap';
 
@@ -11,6 +12,7 @@ import '../../components/modal.jsx';
 import PageLoading from "../../components/pageLoading"
 import PageError from "../../components/pageError"
 import ModalEliminarStation from "./modalEliminarStation";
+import PageSuccess from "../../components/pageSuccess"
 
 class EditarStation extends React.Component {
   state = {
@@ -18,11 +20,14 @@ class EditarStation extends React.Component {
     error: null,
     modalDeleteIsOpen: false,
     data: undefined,
+    success: null,
+    missedValue:false,
     form: {
-      Address: '',
-      TotalSlots: 0,
-      Longitude: 0.0,
-      Latitude: 0.0,
+      uuidStation: '',
+      address: '',
+      totalSlots: 0,
+      longitude: 0.0,
+      latitude: 0.0,
     },
   };
   
@@ -32,13 +37,12 @@ class EditarStation extends React.Component {
   
   fetchData = async () => {
     try {
-      var addres = { "Address":this.props.match.params.Address}
-      const data = await api.stations.read(addres);
-      console.log(data)
-      this.state.form.Address = data.Items[0].Address
-      this.state.form.TotalSlots = data.Items[0].TotalSlots
-      this.state.form.Longitude = data.Items[0].Longitude
-      this.state.form.Latitude = data.Items[0].Latitude
+      var uuidStation = { "uuidStation":this.props.match.params.uuidStation}
+      const data = await api.stations.read(uuidStation);
+      this.state.form.address = data.Items[0].address
+      this.state.form.totalSlots = data.Items[0].totalSlots
+      this.state.form.longitude = data.Items[0].longitude
+      this.state.form.latitude = data.Items[0].latitude
       this.setState({ 
         loading: false,
          data: data.Items[0]
@@ -55,16 +59,10 @@ class EditarStation extends React.Component {
        error: null });
 
     try {
-      var Address = {"Address": this.props.match.params.Address};
-      const data = await api.stations.remove(Address);
+      var uuidStation = {"uuidStation": this.props.match.params.uuidStation};
+      const data = await api.stations.remove(uuidStation);
       
       this.props.history.push('/panelStations')
-      /*
-      this.setState({ 
-        loading: false,
-         data: data
-        });
-        */
     } catch (error) {
       this.setState({ loading: false, error: error });
     }
@@ -73,23 +71,43 @@ class EditarStation extends React.Component {
   handleSubmit = async e => {
     e.preventDefault();
 
+    if(
+      this.state.form.address == ""  ||
+      this.state.form.latitude == "" ||
+      this.state.form.longitude == "" ||
+      this.state.form.totalSlots == ""
+      ){
+      
+    this.setState({ 
+      loading: false,
+       error: null,
+      success:null,
+      missedValue: true,
+      success: null,
+     });
+
+    }else{
+      
     this.setState({ 
       loading: true,
        error: null });
-    
-    //this.props.history.push('/panelStations')
-
     try {
-      console.log("gaaaaaaaaa")
-      console.log(this.state.form)
-      const data = await api.stations.update(this.state.form);
-      
-      this.setState({ 
-        loading: false,
-        });
+      this.state.form.uuidStation = this.props.match.params.uuidStation
+      const response = await api.stations.update(this.state.form);
+      if(response.message == "Actualización Correcta"){
+        this.setState({ loading: false, success: response.message });
+      }else{
+        this.setState({ loading: false,missedValue: false});
+      }
     } catch (error) {
-      this.setState({ loading: false, error: error });
+      this.setState({ loading: false, error: error,missedValue: false });
     }
+
+    }
+  };
+  
+  handleOnSuccess = async e => {
+    this.props.history.push('/panelStations')
   };
   
   handleChange = e => {
@@ -107,6 +125,7 @@ class EditarStation extends React.Component {
 
   
   render() {
+    var validationMessage;
 
     if (this.state.loading) {
       return <PageLoading />;
@@ -114,6 +133,23 @@ class EditarStation extends React.Component {
 
     if (this.state.error) {
       return <PageError error={"Hubo un problema al obtener los datos, intentelo en otro momento 😢"} />;
+    }
+    
+    if (this.state.success) {
+      return (<div>
+        <PageSuccess />
+        <div className="DeleteBadgeModal">
+          <button type="button" className="btn btn-success mr-4" onClick={this.handleOnSuccess} >Volver</button>
+        </div>
+      </div>);
+    }
+
+    if (this.state.missedValue) {
+      validationMessage = <Alert color="danger">
+      Un campo no esta completo
+    </Alert>;
+    } else {
+      validationMessage = <div></div>;
     }
 
   return (
@@ -137,36 +173,36 @@ class EditarStation extends React.Component {
                   <Label for="Address">Dirección</Label>
                   <Input 
                   onChange={this.handleChange}
-                  value={this.state.form.Address}
-                  type="text" name="Address" id="Address" placeholder="dirección" />
+                  value={this.state.form.address}
+                  type="text" name="address" id="address" placeholder="dirección" required/>
                 </FormGroup>
                 <br/>
                 
                 <FormGroup>
-                  <Label for="TotalSlots">Espacios</Label>
+                  <Label for="totalSlots">Espacios</Label>
                   <Input 
-                  onChange={this.handleChange}
-                  defaultValue ={this.state.form.TotalSlots}
-                  type="number" name="TotalSlots" id="TotalSlots" placeholder="espacios" />
+                  onChange={this.handleChange} type={'number'} step={'1'} min={1}
+                  defaultValue ={this.state.form.totalSlots}
+                  type="number" name="totalSlots" id="totalSlots" placeholder="espacios" />
                 </FormGroup>
           </div>
           
           <div className="row">
             
           <FormGroup className="mr-4">
-                  <Label for="Latitude">Latitud</Label>
+                  <Label for="latitude">Latitud</Label>
                   <Input 
-                  onChange={this.handleChange}
-                  defaultValue={this.state.form.Latitude}
-                  type="text" name="Latitude" id="Latitude" placeholder="latitud" />
+                  defaultValue={this.state.form.latitude}
+                  onChange={this.handleChange} type={'number'} step={'.0000001'} min={0}
+                  type="text" name="latitude" id="latitude" placeholder="latitud" />
                 </FormGroup>
                 
                 <FormGroup>
-                  <Label for="Longitude">Longitud</Label>
+                  <Label for="longitude">Longitud</Label>
                   <Input 
-                  onChange={this.handleChange}
-                  defaultValue={this.state.form.Longitude}
-                  type="text" name="Longitude" id="Longitude" placeholder="longitud" />
+                  defaultValue={this.state.form.longitude}
+                  onChange={this.handleChange} type={'number'} step={'.0000001'} min={0}
+                  type="text" name="longitude" id="longitude" placeholder="longitud" />
                 </FormGroup>
           </div>
 
@@ -179,7 +215,8 @@ class EditarStation extends React.Component {
           </div>
         </div>
               </Form>
-
+              <div className="row mt-4">{validationMessage}
+              </div>
         <br/>
       </div>
   );

@@ -25,7 +25,7 @@ const api = {
       });
     },
     read(Address) {
-      return callApi(`/stations/name`,{
+      return callApi(`/stations/list/uuid`,{
         method:'POST',
         body: JSON.stringify(Address)
       });
@@ -37,7 +37,7 @@ const api = {
       });
     },
     remove(Address) {
-      return callApi(`/stations/delete`, {
+      return callApi(`/stations/delete/uuid`, {
         method: 'POST',
         body: JSON.stringify(Address),
       });

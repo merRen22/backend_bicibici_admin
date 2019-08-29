@@ -14,23 +14,18 @@ class StationsListItem extends React.Component {
             Direccion:   
             </strong>
             <strong>
-            {this.props.station.Address}
+            {this.props.station.address}
             </strong>
             <br />
             <div className="col">
             <div className="row">
-                Latitud : {this.props.station.Latitude}
+                Latitud : {this.props.station.latitude}
             </div>
             <div className="row">
-                Longitud : {this.props.station.Longitude}
+                Longitud : {this.props.station.longitude}
             </div>
             <div className="row">
-                Espacios : {this.props.station.TotalSlots}
-            </div>
-            <div className="row">
-                Creación : {
-                    this.props.station.createdAt
-                    }
+                Espacios : {this.props.station.totalSlots}
             </div>
             </div>
             
@@ -45,7 +40,7 @@ class StationsListItem extends React.Component {
 
                         
                 <Link className="btn btn-info" 
-                to={`/panelStationsInfo/${this.props.station.Address}`}>
+                to={`/panelStationsInfo/${this.props.station.uuidStation}`}>
                     información</Link>
 <div className="col-12">
     
@@ -83,7 +78,7 @@ class StationsList extends React.Component {
           <ul className="list-unstyled">
             {this.props.stations.map(obj => {
               return (
-                <li key={obj.Address}>
+                <li key={obj.uuidStation}>
                     <StationsListItem station={obj} />
                 </li>
               );
@@ -95,16 +90,3 @@ class StationsList extends React.Component {
   }
   
   export default StationsList;
-
-  /*
-  
-                    
-                  <Link
-                    className="text-reset text-decoration-none"
-                    to={`/badges/${badge.id}`}
-                  >
-                    <StationsListItem station={badge} />
-                  </Link>
-  
-  
-  */

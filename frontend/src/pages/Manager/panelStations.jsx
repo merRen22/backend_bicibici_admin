@@ -7,6 +7,9 @@ import {
   FormGroup,
   Label,
   Input,
+    Pagination,
+    PaginationItem,
+    PaginationLink
 } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import StationsList from '../../components/stations/stationsList.jsx'
@@ -44,11 +47,22 @@ function PanelStations(props) {
         <br />
         <br />
         <br />
+        <div className="row justify-content-center">
+      <Pagination aria-label="Page navigation example">
+        <PaginationItem>
+          <PaginationLink onClick={props.onPreviousPress}  previous></PaginationLink>
+        </PaginationItem>
+        <PaginationItem>
+          <PaginationLink onClick={props.onNextPress} next ></PaginationLink>
+          </PaginationItem>
+          </Pagination>
 
+        </div>
+            <br />
         <div className="row">
           <div className="col-12 vCenterItems container">
 <div className="itemsList__container">
-          <StationsList stations={props.data.Items} />
+          <StationsList stations={props.data} />
 </div>
           </div>
         </div>
