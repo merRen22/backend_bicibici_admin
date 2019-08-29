@@ -24,13 +24,15 @@ module.exports = function(app){
 
     //Bikes
 
-    app.get("/bikes/list",listController.get_all_bikes);  
+    app.post("/bikes/create", listController.createBike);
 
-    app.post("/bikes/create", listController.create_bike);
+    app.get("/bikes/list",listController.getBikes);  
 
-    app.post("/bikes/get",listController.get_bike_by_id);   
+    app.post("/bikes/list/uuid",listController.getBikeByUuid);   
 
-    app.post("/bikes/delete",listController.delete_bike);
+    app.post("/bikes/delete",listController.deleteBikeByUuid);
+
+    app.post("/bikes/update",listController.updateBike);
 
     //Plans
 
