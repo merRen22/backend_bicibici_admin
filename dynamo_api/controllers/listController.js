@@ -314,9 +314,23 @@ exports.updateBike = function(req,res) {
   });
 }
 
-exports.get_plan_by_id = function(req,res) {
+exports.getPlansByName = function(req,callback) {
+   
+  Plans.scan().where('name').contains(req.body.name).loadAll().exec(function (err, resp) {
+      console.log('----------------------------------------------------------------------');
+      if(err) {
+        console.log('Error running query', err);
+      } 
+      else{
+          console.log(resp.Items);
+          callback.send(resp);
+      }
+});
+}
 
-  Plans.query(req.body.PlanID).exec(function (err, resp) {
+exports.get_plan_by_uuid = function(req,res) {
+
+  Plans.query(req.body.uuidPlan).exec(function (err, resp) {
       console.log('----------------------------------------------------------------------');
       if(err) {
         console.log('Error running query', err);
@@ -330,27 +344,27 @@ exports.get_plan_by_id = function(req,res) {
 
 exports.delete_plan = function(req,res) {
 
-Plans.destroy(req.body.PlanID,function (err) {
+Plans.destroy(req.body.uuidPlan,function (err) {
       res.send(
         { message :"Estación Eliminada" });
     });
 }
 
 exports.create_plan = function(req,res) {
-
   if(!req.body) {
     return res.status(400).send({
         message: "Ingrese los datos del plan"
     });
 }
 
-// Create a Station
-var plan = new Plan(
-  {
-    PlanID : req.body.PlanID,
-    Cost   : req.body.Cost,
-    Duration    : req.body.Duration
 
+// Create a Station
+var plan = new Plans(
+  {
+    uuidPlan : uuidv1(),
+    name : req.body.name,
+    cost   : req.body.cost,
+    duration    : req.body.duration
   }
 );
 
@@ -368,6 +382,26 @@ var plan = new Plan(
   
 });
 }
+
+exports.updatePlan = function(req,res) {
+
+  Plans.update({
+    uuidPlan : req.body.uuidPlan,
+    name : req.body.name,
+    cost   : req.body.cost,
+    duration    : req.body.duration
+  },function (err) {
+    if(err)
+    {
+        console.log(err);
+        res.send(JSON.stringify({ message: "Actualización Incorrecta" }));
+    }
+    else
+    {
+        res.send(JSON.stringify({ message: "Actualización Correcta" }));
+    }
+  });
+  }
 
 
 //Accounts

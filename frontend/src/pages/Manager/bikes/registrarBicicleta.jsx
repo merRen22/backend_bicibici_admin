@@ -7,14 +7,14 @@ import {
   Input,
 } from 'reactstrap';
 
-import api from '../../api.js'
+import api from '../../../api.js'
 
-import '../../components/modal.jsx';
-import PageLoading from "../../components/pageLoading"
-import PageError from "../../components/pageError"
-import PageSuccess from "../../components/pageSuccess"
+import '../../../components/modal.jsx';
+import PageLoading from "../../../components/pageLoading"
+import PageError from "../../../components/pageError"
+import PageSuccess from "../../../components/pageSuccess"
 
-class EditarStation extends React.Component {
+class RegistrarBike extends React.Component {
   state = {
     loading: false,
     error: null,
@@ -113,7 +113,7 @@ class EditarStation extends React.Component {
       <div className="DeleteBadgeModal">
 
         <br />
-        <h3>Crear nueva estación</h3>
+        <h3>Registrar nueva bicicleta</h3>
         <br /><br />
 
 
@@ -178,4 +178,4 @@ class EditarStation extends React.Component {
           <button onClick={} className="btn btn-success mr-4">Editar</button>
 */
 
-export default EditarStation;
+export default RegistrarBike;

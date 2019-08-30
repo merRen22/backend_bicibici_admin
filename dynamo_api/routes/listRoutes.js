@@ -38,11 +38,15 @@ module.exports = function(app){
 
     app.get("/plans/list",listController.get_all_plans);  
 
+    app.post("/plans/list/name",listController.getPlansByName);  
+
     app.post("/plans/create", listController.create_plan);
 
-    app.post("/plans/get",listController.get_plan_by_id);   
+    app.post("/plans/get",listController.get_plan_by_uuid);   
 
     app.post("/plans/delete",listController.delete_plan);
+
+    app.post("/plans/update",listController.updatePlan);
 
     //Accounts
 

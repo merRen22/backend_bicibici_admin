@@ -1,7 +1,7 @@
 import React from 'react';
 import { Modal, } from 'reactstrap';
 
-import '../../components/modal.jsx';
+import '../../../components/modal.jsx';
 
 function ModalEliminarStation(props) {
   return (

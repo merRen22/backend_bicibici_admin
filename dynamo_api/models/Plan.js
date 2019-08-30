@@ -18,8 +18,9 @@ var Plan = dynamo.define('tPlans', {
    
     schema : {
       uuidPlan : Joi.string(),
-      Cost   : Joi.number(),
-      Duration    : Joi.number(),
+      name : Joi.string(),
+      cost   : Joi.number(),
+      duration    : Joi.number(),
       createdAt : Joi.date()
     }
   });

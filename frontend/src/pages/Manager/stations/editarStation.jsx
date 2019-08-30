@@ -6,13 +6,13 @@ import {
   Label,
   Input, } from 'reactstrap';
 
-import api from '../../api.js'
+import api from '../../../api.js'
 
-import '../../components/modal.jsx';
-import PageLoading from "../../components/pageLoading"
-import PageError from "../../components/pageError"
+import '../../../components/modal.jsx';
+import PageLoading from "../../../components/pageLoading"
+import PageError from "../../../components/pageError"
 import ModalEliminarStation from "./modalEliminarStation";
-import PageSuccess from "../../components/pageSuccess"
+import PageSuccess from "../../../components/pageSuccess"
 
 class EditarStation extends React.Component {
   state = {

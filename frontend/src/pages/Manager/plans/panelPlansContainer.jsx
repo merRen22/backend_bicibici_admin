@@ -1,29 +1,30 @@
 import React from "react";
 
-import api from '../../api.js'
+import api from '../../../api.js'
 
-import PanelStations from "./panelStations";
-import PageLoading from "../../components/pageLoading"
-import PageError from "../../components/pageError"
+import PanelPlans from "./panelPlans";
+import PageLoading from "../../../components/pageLoading"
+import PageError from "../../../components/pageError"
 
-
-class PanelStationsContainer extends React.Component {
+class PanelPlansContainer extends React.Component {
   state = {
     loading: true,
     error: null,
     data: undefined,
     pages: 0,
-    actualPage: 1
+    actualPage: 1,
+    form: {
+      query: '',
+    }
   };
 
   componentDidMount() {
     this.fetchData();
   }
   
-
   fetchData = async () => {
     try {
-      const data = await api.stations.list();
+      const data = await api.plans.list();
       this.state.pages = Math.ceil(Math.ceil(data.ScannedCount/4,0))
       
       this.setState({ 
@@ -34,7 +35,6 @@ class PanelStationsContainer extends React.Component {
     }
   };
 
-  
   handlePreviousPage = async e => {
     this.setState({ 
       actualPage : this.state.actualPage == 1?1:this.state.actualPage - 1
@@ -44,6 +44,35 @@ class PanelStationsContainer extends React.Component {
   handleNextPage = async e => {
     this.setState({ 
       actualPage : this.state.actualPage == this.state.pages?this.state.pages : this.state.actualPage+1
+    });
+  };
+
+  handleSearch = async e => {
+    this.setState({ 
+      loading: true, 
+      error: null,
+      pages: 0,
+      actualPage: 1,
+     });
+    try {
+      var request = {"name":this.state.form.query}
+      const data = await api.plans.listByName(request);
+      this.state.pages = Math.ceil(Math.ceil(data.Count/4,0))
+      
+      this.setState({ 
+        loading: false,
+         data: data.Items });
+    } catch (error) {
+      this.setState({ loading: false, error: error });
+    }
+  };
+
+  handleChange = e => {
+    this.setState({
+      form: {
+        ...this.state.form,
+        [e.target.name]: e.target.value,
+      },
     });
   };
 
@@ -60,7 +89,9 @@ class PanelStationsContainer extends React.Component {
     }
 
     return (
-      <PanelStations
+      <PanelPlans
+        onChange = {this.handleChange}
+        onSeachItem = {this.handleSearch}
         onNextPress = {this.handleNextPage}
         onPreviousPress = {this.handlePreviousPage}
         data={this.state.data.slice(
@@ -77,4 +108,4 @@ class PanelStationsContainer extends React.Component {
   }
 }
 
-export default PanelStationsContainer;
+export default PanelPlansContainer;
