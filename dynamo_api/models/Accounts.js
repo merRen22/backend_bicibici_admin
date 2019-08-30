@@ -21,8 +21,7 @@ var Account = dynamo.define('tAccounts', {
         email   : Joi.string(),
         password    : Joi.string(),
         typeAccount : Joi.string(),
-        createdAt : Joi.date(),
-        updatedAt : Joi.date()
+        createdAt : Joi.date()
     }
   });
 

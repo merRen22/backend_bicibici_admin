@@ -113,6 +113,41 @@ const api = {
       });
     },
   },
+  accounts: {
+    list() {
+      return callApi('/accounts/list');
+    },
+    listByMail(name) {
+      return callApi('/accounts/list/mail', {
+        method: 'POST',
+        body: JSON.stringify(name),
+      });
+    },
+    create(plan) {
+      return callApi(`/accounts/create`, {
+        method: 'POST',
+        body: JSON.stringify(plan),
+      });
+    },
+    read(uuid) {
+      return callApi(`/accounts/get`,{
+        method:'POST',
+        body: JSON.stringify(uuid)
+      });
+    },
+    update(plan) {
+      return callApi(`/accounts/update`, {
+        method: 'POST',
+        body: JSON.stringify(plan),
+      });
+    },
+    remove(uuid) {
+      return callApi(`/accounts/delete`, {
+        method: 'POST',
+        body: JSON.stringify(uuid),
+      });
+    },
+  },
 };
 
 export default api;

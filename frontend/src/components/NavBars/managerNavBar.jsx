@@ -61,7 +61,7 @@ class ManagerNavbar extends React.Component {
           
           <Link
             className={"mr-4"}
-            to={'/panelUsers'}
+            to={'/panelAccounts'}
           >
             <h3 className="h3 h3_white_title">Usuarios</h3>
           </Link>

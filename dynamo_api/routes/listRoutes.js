@@ -52,11 +52,15 @@ module.exports = function(app){
 
     app.get("/accounts/list",listController.getAccounts);  
 
+    app.post("/accounts/list/mail", listController.getAccountsByMail);
+
     app.post("/accounts/create", listController.createAccount);
 
-    app.post("/accounts/get",listController.getAccountByType);   
+    app.post("/accounts/get",listController.get_account_by_uuid);
 
-    app.post("/accounts/delete",listController.deleteAccountByEmail);
+    app.post("/accounts/update",listController.updateAccount);
+
+    app.post("/accounts/delete",listController.deleteAccountByUuid);
 
     app.get("*", (req,res)=>{
         res.send({ message :"😞 Este espacio aun no esta disponible" })

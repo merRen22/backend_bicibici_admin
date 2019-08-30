@@ -3,6 +3,7 @@ const uuidv1 = require('uuid/v1');
 var Station = require('../models/Station.js');
 var Bikes = require('../models/Bike.js');
 var Plans = require('../models/Plan.js');
+var Accounts = require('../models/Accounts.js');
 var dynamo = require('dynamodb');
 dynamo.AWS.config.update({
   accessKeyId: require("../../config").accessKeyId, 
@@ -413,12 +414,13 @@ exports.createAccount = function(req,res) {
         message: "Account content can not be empty"
     });
 }
-var account = new Account(
+var account = new Accounts(
   {
-        Email   : req.body.Email,
-        Password    : req.body.Password,
-        TypeAccount : req.body.TypeAccount,
-        createdAt : req.body.createdAt
+      uuidAccount : uuidv1(),
+      email   : req.body.email,
+      password    : req.body.password,
+      typeAccount : req.body.typeAccount,
+      createdAt : req.body.createdAt
   }
 );
 
@@ -437,8 +439,8 @@ account.save(function (err) {
 });
 }
 
-exports.getAccountByEmail = function(req,res) {
-    Account.query(req.body.Email).exec(function (err, resp) {
+exports.getAccountsByMail = function(req,res) {
+    Accounts.query(req.body.Email).exec(function (err, resp) {
         console.log('----------------------------------------------------------------------');
         if(err) {
           console.log('Error running query', err);
@@ -451,10 +453,8 @@ exports.getAccountByEmail = function(req,res) {
   });
 }
 
-
-exports.getAccountByType = function(req,res) {
-
-  Account.scan().where('TypeAccount').contains(req.body.TypeAccount).exec(function (err, resp) {
+exports.get_account_by_uuid = function(req,res) {
+  Accounts.query(req.body.uuidAccount).exec(function (err, resp) {
       console.log('----------------------------------------------------------------------');
       if(err) {
         console.log('Error running query', err);
@@ -467,21 +467,40 @@ exports.getAccountByType = function(req,res) {
 });
 }
 
-  exports.deleteAccountByEmail = function(req,res) {
+exports.updateAccount = function(req,res) {
+  Accounts.update({
+    uuidAccount : req.body.uuidAccount,
+    email   : req.body.email,
+    password    : req.body.password,
+    typeAccount : req.body.typeAccount,
+  },function (err) {
+    if(err)
+    {
+        console.log(err);
+        res.send(JSON.stringify({ message: "Actualización Incorrecta" }));
+    }
+    else
+    {
+        res.send(JSON.stringify({ message: "Actualización Correcta" }));
+    }
+  });
+  }
+
+  exports.deleteAccountByUuid = function(req,res) {
 
     /*if(!req.body) {
     return res.status(400).send({
         message: "Note content can not be empty"
     });
 }*/
-    Account.destroy(req.body.Address,function (err) {
-        res.send("Estación Eliminada");
+    Accounts.destroy(req.body.uuidAccount ,function (err) {
+        res.send(JSON.stringify({ message: "Cuenta Eliminada" }));
       });
   }
 
 
   exports.getAccounts = function(body,callback) {
-    Account.scan().loadAll().exec(function (err, resp) {
+    Accounts.scan().loadAll().exec(function (err, resp) {
         console.log('----------------------------------------------------------------------');
         if(err) {
           console.log('Error running query', err);

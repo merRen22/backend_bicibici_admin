@@ -19,6 +19,10 @@ import PanelPlansContainer from "../pages/Manager/plans/panelPlansContainer";
 import InfoPlanContainer from "../pages/Manager/plans/editarPlan";
 import RegistrationPlanContainer from "../pages/Manager/plans/registrarPlan";
 
+import PanelAccountsContainer from "../pages/Manager/account/panelAccountsContainer";
+import InfoAccountContainer from "../pages/Manager/account/editarAccount";
+import RegistrationAccountContainer from "../pages/Manager/account/registrarAccount";
+
 function App(){
   return (
   <BrowserRouter>
@@ -27,7 +31,7 @@ function App(){
       "/panelStations","/panelStationsInfo/:uuidStation","/panelStationsRegistration",
       "/panelBikes","/panelBikesInfo/:uuidBike","/panelBikesRegistration",
       "/panelPlans","/panelPlansInfo/:uuidPlan","/panelPlansRegistration",
-      "/panelAccounts","/panelBikesInfo/:uuidAccount","/panelAccountsRegistration",
+      "/panelAccounts","/panelAccountsInfo/:uuidAccount","/panelAccountsRegistration",
       ]}>
       <ManagerLayout>
         <Route path="/panelStationsInfo/:uuidStation" component={InfoStationContainer} />
@@ -41,8 +45,9 @@ function App(){
         <Route path="/panelPlans" component={PanelPlansContainer} />
         <Route path="/panelPlansRegistration" component={RegistrationPlanContainer} />
         
-
-        <Route path="/panelUsers" component={PanelStationContainer} />
+        <Route path="/panelAccountsInfo/:uuidAccount" component={InfoAccountContainer} />
+        <Route path="/panelAccounts" component={PanelAccountsContainer} />
+        <Route path="/panelAccountsRegistration" component={RegistrationAccountContainer} />
         
       </ManagerLayout>
     </Route>
