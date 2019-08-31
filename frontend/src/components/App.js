@@ -13,6 +13,7 @@ import InfoStationContainer from "../pages/Manager/stations/editarStation";
 import RegistrationStationContainer from "../pages/Manager/stations/registrarStation";
 
 import PanelBikesContainer from "../pages/Manager/bikes/panelBikesContainer";
+import InfoBikeContainer from "../pages/Manager/bikes/editarBike";
 import RegistrationBikeContainer from "../pages/Manager/bikes/registrarBicicleta";
 
 import PanelPlansContainer from "../pages/Manager/plans/panelPlansContainer";
@@ -22,6 +23,8 @@ import RegistrationPlanContainer from "../pages/Manager/plans/registrarPlan";
 import PanelAccountsContainer from "../pages/Manager/account/panelAccountsContainer";
 import InfoAccountContainer from "../pages/Manager/account/editarAccount";
 import RegistrationAccountContainer from "../pages/Manager/account/registrarAccount";
+
+import {PrivateRoute} from './privateRoute'
 
 function App(){
   return (
@@ -34,20 +37,21 @@ function App(){
       "/panelAccounts","/panelAccountsInfo/:uuidAccount","/panelAccountsRegistration",
       ]}>
       <ManagerLayout>
-        <Route path="/panelStationsInfo/:uuidStation" component={InfoStationContainer} />
-        <Route path="/panelStationsRegistration" component={RegistrationStationContainer} />
-        <Route path="/panelStations" component={PanelStationContainer} />
+        <PrivateRoute path="/panelStationsInfo/:uuidStation" component={InfoStationContainer} />
+        <PrivateRoute path="/panelStationsRegistration" component={RegistrationStationContainer} />
+        <PrivateRoute path="/panelStations" component={PanelStationContainer} />
 
-        <Route path="/panelBikes" component={PanelBikesContainer} />
-        <Route path="/panelBikesRegistration" component={RegistrationBikeContainer} />
+        <PrivateRoute path="/panelBikesInfo/:uuidBike" component={InfoBikeContainer} />
+        <PrivateRoute path="/panelBikes" component={PanelBikesContainer} />
+        <PrivateRoute path="/panelBikesRegistration" component={RegistrationBikeContainer} />
 
-        <Route path="/panelPlansInfo/:uuidPlan" component={InfoPlanContainer} />
-        <Route path="/panelPlans" component={PanelPlansContainer} />
-        <Route path="/panelPlansRegistration" component={RegistrationPlanContainer} />
+        <PrivateRoute path="/panelPlansInfo/:uuidPlan" component={InfoPlanContainer} />
+        <PrivateRoute path="/panelPlans" component={PanelPlansContainer} />
+        <PrivateRoute path="/panelPlansRegistration" component={RegistrationPlanContainer} />
         
-        <Route path="/panelAccountsInfo/:uuidAccount" component={InfoAccountContainer} />
-        <Route path="/panelAccounts" component={PanelAccountsContainer} />
-        <Route path="/panelAccountsRegistration" component={RegistrationAccountContainer} />
+        <PrivateRoute path="/panelAccountsInfo/:uuidAccount" component={InfoAccountContainer} />
+        <PrivateRoute path="/panelAccounts" component={PanelAccountsContainer} />
+        <PrivateRoute path="/panelAccountsRegistration" component={RegistrationAccountContainer} />
         
       </ManagerLayout>
     </Route>

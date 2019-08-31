@@ -20,7 +20,7 @@ class AccountsListItem extends React.Component {
             <br />
             <div className="col">
               <div className="row">
-                Tipo de cuenta : {this.props.station.typeAccount}
+                Tipo de cuenta : {this.props.station.typeAccount=="G"?"Gestor":"Administrador"}
               </div>
             </div>
 

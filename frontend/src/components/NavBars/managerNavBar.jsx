@@ -1,18 +1,17 @@
 import React from "react";
 import classNames from "classnames";
-import { Link } from 'react-router-dom';
+import { Link,Redirect } from 'react-router-dom';
 
 import {
   NavbarBrand,
   Navbar,
   Container,
-  NavItem,
-  NavLink
 } from "reactstrap";
 class ManagerNavbar extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      toLogin:false,
       color: "primary"
     };
   }
@@ -20,7 +19,20 @@ class ManagerNavbar extends React.Component {
   }
   componentWillUnmount() {
   }
+  
+  logout = e =>  {
+    localStorage.removeItem('user');
+    this.setState({
+      toLogin:true
+    });
+  }
+
   render() {
+    
+    if(this.state.toLogin === true) {
+      return <Redirect to='/'/>
+    }
+
     return (
       <>
 
@@ -75,6 +87,7 @@ class ManagerNavbar extends React.Component {
           </Link>
 
           <button
+          onClick = {this.logout}
             className={"btn transparent"}
           >
             <h3 className="h3 h3_white_title">cerrar sesión</h3>

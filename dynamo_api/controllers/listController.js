@@ -204,7 +204,7 @@ exports.getBikes = function (body, callback) {
 
 exports.getBikeByUuid = function (req, res) {
 
-  Bikes.query(req.body.uuidBike).exec(function (err, resp) {
+  Bikes.scan().where('uuidBike').contains(req.body.uuidBike).exec(function (err, resp) {
     console.log('----------------------------------------------------------------------');
     if (err) {
       console.log('Error running query', err);
@@ -269,11 +269,11 @@ exports.updateBike = function (req, res) {
 
   Bikes.update({
     uuidBike: req.body.uuidBike,
-    isIntervened: req.body.IsIntervened,
-    longuitude: req.body.Longuitude,
-    available: req.body.Available,
-    isMoving: req.body.IsMoving,
-    latitude: req.body.Latitude
+    isIntervened: req.body.isIntervened,
+    longitude: req.body.longitude,
+    available: req.body.available,
+    isMoving: req.body.isMoving,
+    latitude: req.body.latitude
   }, function (err) {
     if (err) {
       console.log(err);
@@ -417,6 +417,26 @@ exports.createAccount = function (req, res) {
     }
 
 
+  });
+}
+
+exports.loginAccount = function (req, res) {
+  Accounts.scan().where('email').equals(req.body.email).exec(function (err, resp) {
+    console.log('----------------------------------------------------------------------');
+    if (err) {
+      console.log('Error running query', err);
+      res.send({ message: "Account not found" })
+    }
+    else {
+      console.log(resp)
+      if(resp.Count == 0){
+        res.send(JSON.stringify({ message: "Usuario no esta en el sistema" }))
+      }else{
+        resp.Items[0].attrs.password == req.body.password
+        ?res.send(JSON.stringify({ message: "Autentificado" }))
+        :res.send(JSON.stringify({ message: "No autentificado" }))
+      }
+    }
   });
 }
 

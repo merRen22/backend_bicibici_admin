@@ -58,8 +58,8 @@ class PanelBikesContainer extends React.Component {
       actualPage: 1,
      });
     try {
-      var request = {"address":this.state.form.query}
-      const data = await api.stations.listByAddress(request);
+      var request = {"uuidBike":this.state.form.query}
+      const data = await api.bike.read(request);
       this.state.pages = Math.ceil(Math.ceil(data.Count/4,0))
       
       this.setState({ 

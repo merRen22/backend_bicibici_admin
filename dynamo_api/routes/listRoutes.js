@@ -62,6 +62,8 @@ module.exports = function(app){
 
     app.post("/accounts/delete",listController.deleteAccountByUuid);
 
+    app.post("/accounts/login",listController.loginAccount);
+
     app.get("*", (req,res)=>{
         res.send({ message :"😞 Este espacio aun no esta disponible" })
     });

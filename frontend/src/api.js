@@ -147,6 +147,12 @@ const api = {
         body: JSON.stringify(uuid),
       });
     },
+    login(formLogin) {
+      return callApi(`/accounts/login`, {
+        method: 'POST',
+        body: JSON.stringify(formLogin),
+      });
+    },
   },
 };
 
