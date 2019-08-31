@@ -53,10 +53,10 @@ const api = {
     list() {
       return callApi('/bikes/list');
     },
-    create(station) {
+    create() {
       return callApi(`/bikes/create`, {
         method: 'POST',
-        body: JSON.stringify(station),
+        body: JSON.stringify(),
       });
     },
     read(Address) {

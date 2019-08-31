@@ -11,7 +11,7 @@ dynamo.AWS.config.update({
   region: require("../../config.json").Region});
   
 
-  var Bike = dynamo.define('tBikes', {
+  var Bike = dynamo.define('tBicycles', {
     hashKey : 'uuidBike',
    
     // add the timestamp attributes (updatedAt, createdAt)
@@ -29,7 +29,7 @@ dynamo.AWS.config.update({
   });
 
   
-  Bike.config({tableName: 'tBikes'});
-  module.exports = dynamo.model("tBikes",Bike);
+  Bike.config({tableName: 'tBicycles'});
+  module.exports = dynamo.model("tBicycles",Bike);
 
   

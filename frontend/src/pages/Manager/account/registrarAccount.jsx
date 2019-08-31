@@ -4,7 +4,7 @@ import {
     FormGroup,
     Alert,
     Label,
-    Input,
+    Input
 } from 'reactstrap';
 
 import api from '../../../api.js'
@@ -13,6 +13,12 @@ import '../../../components/modal.jsx';
 import PageLoading from "../../../components/pageLoading"
 import PageError from "../../../components/pageError"
 import PageSuccess from "../../../components/pageSuccess"
+import Select, { components } from 'react-select'
+
+const options = [
+    { value: 'G', label: 'Gestor' },
+    { value: 'A', label: 'Administrador' }
+];
 
 class RegistrarAccount extends React.Component {
     state = {
@@ -22,6 +28,8 @@ class RegistrarAccount extends React.Component {
         modalDeleteIsOpen: false,
         data: undefined,
         missedValue: false,
+        dropdownOpen: false,
+
         form: {
             email: '',
             password: '',
@@ -30,6 +38,13 @@ class RegistrarAccount extends React.Component {
     };
 
     componentDidMount() {
+    }
+
+
+    toggle = async e => {
+        this.setState({
+            dropdownOpen: !this.dropdownOpen
+        });
     }
 
     handleSubmit = async e => {
@@ -78,6 +93,15 @@ class RegistrarAccount extends React.Component {
         });
     };
 
+    handleChangeSelect = (selectedOption) => {
+        this.setState({
+            form: {
+                ...this.state.form,
+                typeAccount: selectedOption.value
+            }
+        });
+    }
+
     render() {
         var validationMessage
 
@@ -111,7 +135,7 @@ class RegistrarAccount extends React.Component {
 
                 <br />
                 <h3>Registrar nuevo trabajador</h3>
-                <br/><br />
+                <br /><br />
 
 
                 <Form onSubmit={this.handleSubmit}>
@@ -121,7 +145,7 @@ class RegistrarAccount extends React.Component {
                             <Label for="email">Correo</Label>
                             <Input
                                 onChange={this.handleChange}
-                                type="text" name="email" id="email" placeholder="correo" required />
+                                type="email" name="email" id="email" placeholder="correo" required />
                         </FormGroup>
                         <br />
 
@@ -134,16 +158,15 @@ class RegistrarAccount extends React.Component {
                         </FormGroup>
                     </div>
 
-                    <div className="row">
-
-                        <FormGroup className="mr-4">
+                        <FormGroup>
                             <Label for="typeAccount">Tipo de cuenta</Label>
-                            <Input
-                                type="text"
-                                onChange={this.handleChange}
-                                name="typeAccount" id="typeAccount" placeholder="tipo de cuenta" required />
+                            <Select
+                                onChange={this.handleChangeSelect}
+                                autoFocus={true}
+                                options={options}
+                            />
+
                         </FormGroup>
-                    </div>
 
                     <div>
                         <br /><br />
@@ -151,7 +174,6 @@ class RegistrarAccount extends React.Component {
                             <button type="submit" step="0.1" className="btn btn-success mr-4">Registrar</button>
                         </div>
                     </div>
-
                 </Form>
                 <br />
 

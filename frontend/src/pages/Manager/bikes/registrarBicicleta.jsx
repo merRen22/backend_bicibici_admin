@@ -14,6 +14,8 @@ import PageLoading from "../../../components/pageLoading"
 import PageError from "../../../components/pageError"
 import PageSuccess from "../../../components/pageSuccess"
 
+var QRCode = require('qrcode.react');
+
 class RegistrarBike extends React.Component {
   state = {
     loading: false,
@@ -21,13 +23,7 @@ class RegistrarBike extends React.Component {
     success: null,
     modalDeleteIsOpen: false,
     data: undefined,
-    missedValue:false,
-    form: {
-      address: '',
-      totalSlots: 0,
-      longitude: 0.0,
-      latitude: 0.0,
-    },
+    missedValue: false,
   };
 
   componentDidMount() {
@@ -36,49 +32,23 @@ class RegistrarBike extends React.Component {
   handleSubmit = async e => {
     e.preventDefault();
 
-    if (
-      this.state.form.qddress == "" ||
-      this.state.form.latitude == "" ||
-      this.state.form.longitude == "" ||
-      this.state.form.totalSlots == ""
-    ) {
-
-      this.setState({
-        loading: false,
-        error: null,
-        success: null,
-        missedValue: true
-      });
-
-    } else {
-
-      this.setState({ loading: true, error: null });
-      try {
-        var response = await api.stations.create(this.state.form);
-        console.log(response.message)
-        if (response.message = "Registro Correcto") {
-          this.setState({ loading: false, success: response.message });
-        } else {
-
-        }
-      } catch (error) {
-        this.setState({ loading: false, error: error });
+    this.setState({ loading: true, error: null });
+    try {
+      var response = await api.bike.create();
+      console.log(response.message)
+      if (response.message != "") {
+        this.setState({ loading: false, success: response.message });
+      } else {
+        this.setState({ loading: false, error: "error" });
       }
+    } catch (error) {
+      this.setState({ loading: false, error: error });
     }
   };
 
 
   handleOnSuccess = async e => {
-    this.props.history.push('/panelStations')
-  };
-
-  handleChange = e => {
-    this.setState({
-      form: {
-        ...this.state.form,
-        [e.target.name]: e.target.value,
-      },
-    });
+    this.props.history.push('/panelBikes')
   };
 
   render() {
@@ -96,6 +66,20 @@ class RegistrarBike extends React.Component {
       return (<div>
         <PageSuccess />
         <div className="DeleteBadgeModal">
+        <br/>
+        Codigo QR : 
+        <br/>
+        <br/>
+  <QRCode value={this.state.success} />
+  <br/>  
+<br/>
+        Codigo :
+        <br/>
+        <br/>
+  {this.state.success}
+        </div>
+        
+        <div className="DeleteBadgeModal">
           <button type="button" className="btn btn-success mr-4" onClick={this.handleOnSuccess} >Volver</button>
         </div>
       </div>);
@@ -103,7 +87,7 @@ class RegistrarBike extends React.Component {
 
     if (this.state.missedValue) {
       validationMessage = <Alert color="danger">
-      Un campo no esta completo
+        Un campo no esta completo
     </Alert>;
     } else {
       validationMessage = <div></div>;
@@ -118,64 +102,27 @@ class RegistrarBike extends React.Component {
 
 
         <Form onSubmit={this.handleSubmit}>
-          <div className="row">
 
-            <FormGroup className="mr-4">
-              <Label for="address">Dirección</Label>
-              <Input
-                onChange={this.handleChange}
-                type="text" name="address" id="address" placeholder="dirección" required/>
-            </FormGroup>
-            <br />
-
-            <FormGroup>
-              <Label for="totalSlots">Espacios</Label>
-              <Input
-                onChange={this.handleChange} type={'number'} step={'1'} min={1}
-                name="totalSlots" id="totalSlots" placeholder="espacios" required/>
-            </FormGroup>
-          </div>
-
-          <div className="row">
-
-            <FormGroup className="mr-4">
-              <Label for="latitude">Latitud</Label>
-              <Input
-                onChange={this.handleChange} type={'number'} step={'.0000001'} min={0}
-                name="latitude" id="latitude" placeholder="latitud" required/>
-            </FormGroup>
-
-            <FormGroup>
-              <Label for="longitude">Longitud</Label>
-              <Input
-                onChange={this.handleChange} type={'number'} step={'.0000001'} min={0}
-                name="longitude" id="longitude" placeholder="longitud" required/>
-            </FormGroup>
-          </div>
-
-          <div>
+          <div className="container">
+            <div className="row">
+              <h3>El registro de una bicicleta crea un código único para la bicicleta y registra sus estados en el sistema, los cuales se actualizarán cuando la bicicletas inicie operaciones</h3>
+            </div>
             <br /><br />
             <div className="row">
-              <button type="submit" step="0.1" className="btn btn-success mr-4">Registrar</button>
+              <button type="submit" step="0.1" className="btn btn-success mr-4">Crear registro</button>
             </div>
           </div>
 
         </Form>
         <br />
-        
+
         <div className="row mt-4">
-{validationMessage}
-              </div>
+          {validationMessage}
+        </div>
       </div>
     );
 
   }
 }
-
-/*
-
-
-          <button onClick={} className="btn btn-success mr-4">Editar</button>
-*/
 
 export default RegistrarBike;

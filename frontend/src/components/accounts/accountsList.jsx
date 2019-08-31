@@ -58,7 +58,7 @@ class AccountsList extends React.Component {
         <ul className="list-unstyled">
           {this.props.stations.map(obj => {
             return (
-              <li key={obj.uuidAccont}>
+              <li key={obj.uuidAccount}>
                 <AccountsListItem station={obj} />
               </li>
             );

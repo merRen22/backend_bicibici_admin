@@ -56,7 +56,9 @@ class PanelAccountsContainer extends React.Component {
      });
     try {
       var request = {"email":this.state.form.query}
+      console.log(request)
       const data = await api.accounts.listByMail(request);
+      console.log(data)
       this.state.pages = Math.ceil(Math.ceil(data.Count/4,0))
       
       this.setState({ 
