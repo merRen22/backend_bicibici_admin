@@ -14,7 +14,7 @@ app.use((req, res, next) => {
 
 
 
-require("./dynamo_api/routes/listRoutes.js")(app);
+require("./dynamo_api/routes/listRoutes")(app);
 app.listen(3010, ()=>{
     console.log("Express ha iniciado correctamente!");
 });

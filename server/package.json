@@ -32,5 +32,13 @@
     "js"
   ],
   "author": "Renato Mercado Luna && Retto",
-  "license": "ISC"
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/merRen22/backend_bicibici_admin.git"
+  },
+  "bugs": {
+    "url": "https://github.com/merRen22/backend_bicibici_admin/issues"
+  },
+  "homepage": "https://github.com/merRen22/backend_bicibici_admin#readme"
 }
