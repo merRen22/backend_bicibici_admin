@@ -141,14 +141,14 @@ class EditarStation extends React.Component {
             <FormGroup className="mr-4">
               <Label for="latitude">Latitud</Label>
               <Input
-                onChange={this.handleChange} type={'number'} step={'.0000001'} min={0}
+                onChange={this.handleChange} type={'number'} step={'.0000001'}
                 name="latitude" id="latitude" placeholder="latitud" required/>
             </FormGroup>
 
             <FormGroup>
               <Label for="longitude">Longitud</Label>
               <Input
-                onChange={this.handleChange} type={'number'} step={'.0000001'} min={0}
+                onChange={this.handleChange} type={'number'} step={'.0000001'}
                 name="longitude" id="longitude" placeholder="longitud" required/>
             </FormGroup>
           </div>

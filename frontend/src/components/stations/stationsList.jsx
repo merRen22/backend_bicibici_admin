@@ -36,14 +36,14 @@ class StationsListItem extends React.Component {
             <br />
             <div className="row">
               <Link className="btn btn-info"
-                to={`/panelStationsInfo/${this.props.station.uuidPlan}`}>
+                to={`/panelStationsInfo/${this.props.station.uuidStation}`}>
                 información</Link>
               <div className="col-12">
                 <br />
                 <a
                   className="btn btn-success"
                   target="_blank"
-                  href={`https://maps.google.com/maps?q=${this.props.station.Latitude},${this.props.station.Longitude}`}>Mapa</a>
+                  href={`https://maps.google.com/maps?q=${this.props.station.latitude},${this.props.station.longitude}`}>Mapa</a>
               </div>
             </div>
           </div>

@@ -204,7 +204,7 @@ class EditarBike extends React.Component {
               <Label for="latitude">Latitud</Label>
               <Input
                 onChange={this.handleChange}
-                type={'number'} step={'.0000001'} min={0}
+                type={'number'} step={'.0000001'}
                 value={this.state.form.latitude}
                 name="latitude" id="latitude" placeholder="Latitud" required />
             </FormGroup>
@@ -214,9 +214,8 @@ class EditarBike extends React.Component {
               <Label for="longitude">Longitud</Label>
               <Input
                 onChange={this.handleChange}
-                type={'number'} step={'.0000001'} min={0}
+                type={'number'} step={'.0000001'}
                 defaultValue={this.state.form.longitude}
-                type="text"
                 id="longitude" placeholder="Longitud" required />
             </FormGroup>
           </div>

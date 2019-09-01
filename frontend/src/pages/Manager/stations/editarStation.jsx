@@ -193,16 +193,16 @@ class EditarStation extends React.Component {
                   <Label for="latitude">Latitud</Label>
                   <Input 
                   defaultValue={this.state.form.latitude}
-                  onChange={this.handleChange} type={'number'} step={'.0000001'} min={0}
-                  type="text" name="latitude" id="latitude" placeholder="latitud" />
+                  onChange={this.handleChange} type={'number'} step={'.0000001'}
+                  name="latitude" id="latitude" placeholder="latitud" />
                 </FormGroup>
                 
                 <FormGroup>
                   <Label for="longitude">Longitud</Label>
                   <Input 
                   defaultValue={this.state.form.longitude}
-                  onChange={this.handleChange} type={'number'} step={'.0000001'} min={0}
-                  type="text" name="longitude" id="longitude" placeholder="longitud" />
+                  onChange={this.handleChange} type={'number'} step={'.0000001'}
+                  name="longitude" id="longitude" placeholder="longitud" />
                 </FormGroup>
           </div>
 
