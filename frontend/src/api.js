@@ -1,5 +1,4 @@
-const BASE_URL = 'http://localhost:3010';
-
+//const BASE_URL = 'http://localhost:3010';
 
 async function callApi(endpoint, options = {}) {
   options.headers = {

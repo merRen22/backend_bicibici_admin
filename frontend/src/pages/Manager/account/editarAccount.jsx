@@ -67,8 +67,13 @@ class EditarAccount extends React.Component {
 
     try {
       var uuidAccount = { "uuidAccount": this.props.match.params.uuidAccount };
-      const data = await api.accounts.remove(uuidAccount);
-      this.props.history.push('/panelAccounts')
+      const response = await api.accounts.remove(uuidAccount);
+
+      if(response.message == "Cuenta Eliminada"){
+        this.setState({ loading: false, success: response.message });
+      }else{
+        this.setState({ loading: false,missedValue: false});
+      }
     } catch (error) {
       this.setState({ loading: false, error: error });
     }

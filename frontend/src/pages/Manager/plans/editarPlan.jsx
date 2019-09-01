@@ -58,9 +58,13 @@ class EditarPlan extends React.Component {
 
     try {
       var uuidPlan = {"uuidPlan": this.props.match.params.uuidPlan};
-      const data = await api.plans.remove(uuidPlan);
+      const response = await api.plans.remove(uuidPlan);
       
-      this.props.history.push('/panelPlans')
+      if(response.message == "Estación Eliminada"){
+        this.setState({ loading: false, success: response.message });
+      }else{
+        this.setState({ loading: false,missedValue: false});
+      }
     } catch (error) {
       this.setState({ loading: false, error: error });
     }

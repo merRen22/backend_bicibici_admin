@@ -60,9 +60,13 @@ class EditarStation extends React.Component {
 
     try {
       var uuidStation = {"uuidStation": this.props.match.params.uuidStation};
-      const data = await api.stations.remove(uuidStation);
-      
-      this.props.history.push('/panelStations')
+      const response = await api.stations.remove(uuidStation);
+
+      if(response.message == "Estación Eliminada"){
+        this.setState({ loading: false, success: response.message });
+      }else{
+        this.setState({ loading: false,missedValue: false});
+      }
     } catch (error) {
       this.setState({ loading: false, error: error });
     }
@@ -223,11 +227,5 @@ class EditarStation extends React.Component {
   
 }
 }
-
-/*
-
-
-          <button onClick={} className="btn btn-success mr-4">Editar</button>
-*/
 
 export default EditarStation;

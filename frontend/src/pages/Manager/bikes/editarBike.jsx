@@ -76,8 +76,13 @@ class EditarBike extends React.Component {
 
     try {
       var uuidBike = { "uuidBike": this.props.match.params.uuidBike };
-      const data = await api.bike.remove(uuidBike);
-      this.props.history.push('/panelBikes')
+      const response = await api.bike.remove(uuidBike);
+
+      if(response.message == "Bicileta Eliminada"){
+        this.setState({ loading: false, success: response.message });
+      }else{
+        this.setState({ loading: false,missedValue: false});
+      }
     } catch (error) {
       this.setState({ loading: false, error: error });
     }
