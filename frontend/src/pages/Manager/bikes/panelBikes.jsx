@@ -22,7 +22,6 @@ function PanelBikes(props) {
       <div className="container">
         <br />
 
-
         <Form className="row justify-content-center" onSubmit={props.onSeachItem}>
           <FormGroup className="col-6">
             <Label for="query">Nombre</Label>

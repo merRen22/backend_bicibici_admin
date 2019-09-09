@@ -27,6 +27,9 @@ class StationsListItem extends React.Component {
               <div className="row">
                 Espacios : {this.props.station.totalSlots}
               </div>
+              <div className="row">
+                Espacios libres : {this.props.station.availableSlots}
+              </div>
             </div>
 
             <br />

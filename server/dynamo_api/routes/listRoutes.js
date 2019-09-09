@@ -21,7 +21,6 @@ module.exports = function(app){
 
     app.post("/stations/delete/address",listController.deleteStationByAddress);
     
-
     //Bikes
 
     app.post("/bikes/create", listController.createBike);
@@ -63,6 +62,15 @@ module.exports = function(app){
     app.post("/accounts/delete",listController.deleteAccountByUuid);
 
     app.post("/accounts/login",listController.loginAccount);
+
+    //report admin
+    app.post("/report/close",listController.closeReport);
+
+    //dashboard admin
+
+    app.get("/dashboard/map",listController.getMapElements);
+
+    app.get("/dashboard/report",listController.getReportElements);
 
     app.get("*", (req,res)=>{
         res.send({ message :"😞 Este espacio aun no esta disponible" })

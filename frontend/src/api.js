@@ -1,4 +1,4 @@
-//const BASE_URL = 'http://localhost:3010';
+const BASE_URL = 'http://localhost:3010';
 
 async function callApi(endpoint, options = {}) {
   options.headers = {
@@ -154,6 +154,22 @@ const api = {
       });
     },
   },
+  map: {
+    mapElements() {
+      return callApi('/dashboard/map');
+    },
+  },
+  report: {
+    reportElements(){
+      return callApi('/dashboard/report')
+    },
+    closeReport(uuid){
+      return callApi('/report/close', {
+        method: 'POST',
+        body: JSON.stringify(uuid),
+      });
+    }
+  }
 };
 
 export default api;

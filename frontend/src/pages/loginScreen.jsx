@@ -1,5 +1,4 @@
 import React from "react";
-import classnames from "classnames";
 
 import LoginFormCard from "../components/forms/loginFormCard.jsx";
 import { Redirect } from 'react-router-dom'
@@ -11,9 +10,6 @@ import PageError from "../components/pageError"
 import {
   TabContent,
   TabPane,
-  Nav,
-  NavItem,
-  NavLink,
   Row,
   Alert,
   Col,
@@ -32,7 +28,8 @@ class Login extends React.Component {
     this.state = {
       activeTab: "1",
       loginMessage: null,
-      toHome: false,
+      toHomeGestor: false,
+      toHomeAdmin: false,
       loading: false,
       error: null,
       form: {
@@ -73,6 +70,8 @@ class Login extends React.Component {
         }));
         this.setState({
           loading: false,
+          toHomeAdmin : data.tipo=='A',
+          toHomeGestor : data.tipo=='G',
           toHome: true
         });
       }
@@ -101,9 +100,15 @@ class Login extends React.Component {
       validationMessage = <div></div>;
     }
 
-    if (this.state.toHome === true) {
+    if (this.state.toHomeGestor === true) {
       return <Redirect to='/panelStations' />
     }
+
+    if (this.state.toHomeAdmin === true) {
+      return <Redirect to='/HomeAdmin' />
+    }
+
+    
 
     return (
       <div className="container" id="root">
@@ -112,20 +117,6 @@ class Login extends React.Component {
             <h1 className="h1 h1_black_mega_title">bicibici</h1>
           </div>
           <div className="col-6">
-            <Nav tabs>
-              <NavItem>
-                <NavLink
-                  className={classnames({
-                    active: this.state.activeTab === "1"
-                  })}
-                  onClick={() => {
-                    //this.toggle("1");
-                  }}
-                >
-                  Gestor
-                </NavLink>
-              </NavItem>
-            </Nav>
 
             <TabContent activeTab={this.state.activeTab}>
               <TabPane tabId="1">
@@ -179,67 +170,3 @@ class Login extends React.Component {
     
     export default Login;
     
-    
-    /*
-    
-              <NavItem>
-          <NavLink
-            className={classnames({
-              active: this.state.activeTab === "2"
-            })}
-            onClick={() => {
-              this.toggle("2");
-            }}
-          >
-            Gestor
-                </NavLink>
-        </NavItem>
-
-        */
-        
-        
-        /*
-        
-        
-        
-        
-                        <div>
-          <form>
-            <div className="form-group">
-              <label>Email</label>
-              <input
-                onChange={this.handleChange}
-                className="form-control"
-                type="text"
-                name="email"
-                value={this.state.form.firstName}
-              />
-            </div>
-
-            <div className="form-group">
-              <label>Password</label>
-              <input
-                onChange={this.handleChange}
-                className="form-control"
-                type="text"
-                name="password"
-                value={this.state.form.lastName}
-              />
-            </div>
-          </form>
-
-          <button
-            type="button"
-            onClick={this.handleLogin}
-            className="btn btn-primary">
-            Login
-          </button>
-        </div>
-
-
-
-
-
-
-
-        */

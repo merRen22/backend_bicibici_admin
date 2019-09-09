@@ -35,7 +35,6 @@ class ManagerNavbar extends React.Component {
 
     return (
       <>
-
         <Navbar
           className={classNames("navbar-absolute", this.state.color)}
           expand="lg"

@@ -28,6 +28,7 @@ class EditarStation extends React.Component {
       totalSlots: 0,
       longitude: 0.0,
       latitude: 0.0,
+      availableSlots: 0
     },
   };
   
@@ -43,6 +44,7 @@ class EditarStation extends React.Component {
       this.state.form.totalSlots = data.Items[0].totalSlots
       this.state.form.longitude = data.Items[0].longitude
       this.state.form.latitude = data.Items[0].latitude
+      this.state.form.availableSlots = data.Items[0].availableSlots
       this.setState({ 
         loading: false,
          data: data.Items[0]
@@ -79,7 +81,9 @@ class EditarStation extends React.Component {
       this.state.form.address == ""  ||
       this.state.form.latitude == "" ||
       this.state.form.longitude == "" ||
-      this.state.form.totalSlots == ""
+      this.state.form.totalSlots == "" ||
+      this.state.form.availableSlots == "" ||
+      this.state.form.availableSlots > this.state.form.totalSlots
       ){
       
     this.setState({ 
@@ -209,6 +213,21 @@ class EditarStation extends React.Component {
                   name="longitude" id="longitude" placeholder="longitud" />
                 </FormGroup>
           </div>
+          
+          <div className="row">
+
+          <FormGroup>
+                  <Label for="availableSlots">Espacios libres</Label>
+                  <Input 
+                  onChange={this.handleChange} type={'number'} step={'1'} min={1}
+                  defaultValue ={this.state.form.availableSlots}
+                  type="number" name="availableSlots" id="availableSlots" placeholder="espacios libres" />
+                </FormGroup>
+
+                
+          </div>
+
+
 
           
         <div>

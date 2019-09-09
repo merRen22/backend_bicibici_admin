@@ -3,11 +3,12 @@ import {  BrowserRouter,Switch, Route  } from "react-router-dom";
 
 import MainLayout from "../layouts/mainLayout";
 import ManagerLayout from "../layouts/managerLayout";
-import AdminLayout from "../layouts/mainLayout";
+import AdminLayout from "../layouts/adminLayout";
 
 import Login from "../pages/loginScreen";
+import {PrivateRoute} from './privateRoute'
 
-
+//Manager screens
 import PanelStationContainer from "../pages/Manager/stations/panelStationContainer";
 import InfoStationContainer from "../pages/Manager/stations/editarStation";
 import RegistrationStationContainer from "../pages/Manager/stations/registrarStation";
@@ -24,7 +25,10 @@ import PanelAccountsContainer from "../pages/Manager/account/panelAccountsContai
 import InfoAccountContainer from "../pages/Manager/account/editarAccount";
 import RegistrationAccountContainer from "../pages/Manager/account/registrarAccount";
 
-import {PrivateRoute} from './privateRoute'
+//Admin screens
+import HomeAdmin from '../pages/Administrator/homeAdmin'
+import ReportAdmin from '../pages/Administrator/reports'
+
 
 function App(){
   return (
@@ -34,7 +38,7 @@ function App(){
       "/panelStations","/panelStationsInfo/:uuidStation","/panelStationsRegistration",
       "/panelBikes","/panelBikesInfo/:uuidBike","/panelBikesRegistration",
       "/panelPlans","/panelPlansInfo/:uuidPlan","/panelPlansRegistration",
-      "/panelAccounts","/panelAccountsInfo/:uuidAccount","/panelAccountsRegistration",
+      "/panelAccounts","/panelAccountsInfo/:uuidAccount","/panelAccountsRegistration"
       ]}>
       <ManagerLayout>
         <PrivateRoute path="/panelStationsInfo/:uuidStation" component={InfoStationContainer} />
@@ -52,8 +56,16 @@ function App(){
         <PrivateRoute path="/panelAccountsInfo/:uuidAccount" component={InfoAccountContainer} />
         <PrivateRoute path="/panelAccounts" component={PanelAccountsContainer} />
         <PrivateRoute path="/panelAccountsRegistration" component={RegistrationAccountContainer} />
-        
       </ManagerLayout>
+    </Route>
+    <Route path={[
+      "/HomeAdmin",
+      "/ReportAdmin"
+      ]}>
+      <AdminLayout>
+        <PrivateRoute path="/HomeAdmin" component={HomeAdmin} />
+        <PrivateRoute path="/ReportAdmin" component={ReportAdmin} />
+      </AdminLayout>
     </Route>
     <Route exact path={["/"]}>
       <MainLayout>

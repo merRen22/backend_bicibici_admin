@@ -1,9 +1,11 @@
 'use strict';
 const uuidv1 = require('uuid/v1');
 var Station = require('../models/Station.js');
+var Report = require('../models/Report');
 var Bikes = require('../models/Bike.js');
 var Plans = require('../models/Plan.js');
 var Accounts = require('../models/Accounts.js');
+var Users = require('../models/Users.js');
 var dynamo = require('dynamodb');
 dynamo.AWS.config.update({
   accessKeyId: require("../../config").accessKeyId,
@@ -28,7 +30,8 @@ exports.createStation = function (req, res) {
       address: req.body.address,
       latitude: req.body.latitude,
       longitude: req.body.longitude,
-      totalSlots: req.body.totalSlots
+      totalSlots: req.body.totalSlots,
+      availableSlots: req.body.totalSlots
     }
   );
 
@@ -57,7 +60,8 @@ exports.updateStation = function (req, res) {
     address: req.body.address,
     latitude: req.body.latitude,
     longitude: req.body.longitude,
-    totalSlots: req.body.totalSlots
+    totalSlots: req.body.totalSlots,
+    availableSlots: req.body.availableSlots
   }, function (err) {
     if (err) {
       console.log(err);
@@ -86,7 +90,6 @@ exports.getStationByUuid = function (req, res) {
     }
   });
 }
-
 
 exports.getStationByAddress = function (req, res) {
 
@@ -433,7 +436,7 @@ exports.loginAccount = function (req, res) {
         res.send(JSON.stringify({ message: "Usuario no esta en el sistema" }))
       }else{
         resp.Items[0].attrs.password == req.body.password
-        ?res.send(JSON.stringify({ message: "Autentificado" }))
+        ?res.send(JSON.stringify({ message: "Autentificado", tipo: resp.Items[0].attrs.typeAccount }))
         :res.send(JSON.stringify({ message: "No autentificado" }))
       }
     }
@@ -486,12 +489,6 @@ exports.updateAccount = function (req, res) {
 }
 
 exports.deleteAccountByUuid = function (req, res) {
-
-  /*if(!req.body) {
-  return res.status(400).send({
-      message: "Note content can not be empty"
-  });
-}*/
   Accounts.destroy(req.body.uuidAccount, function (err) {
     res.send(JSON.stringify({ message: "Cuenta Eliminada" }));
   });
@@ -511,4 +508,81 @@ exports.getAccounts = function (body, callback) {
     }
   });
 }
+
+//Dashbord functions
+
+//solo bicicleta en movimiento
+//solo reportes sin resolver
+//todas las estaciones
+exports.getMapElements = async function (body, callback) {
+  var stations = await Station.scan().loadAll().exec().promise()
+  var reports = await Report.scan().where('state').equals(1).exec().promise()
+  var bikes = await Bikes.scan().where('isMoving').equals(1).exec().promise()
+
+  callback.send(JSON.stringify({
+    stations: stations,
+    reports: reports,
+    bikes: bikes,
+  }));
+}
+
+exports.getReportElements = async function (body, callback) {
+  var stations = await Station.scan().loadAll().exec().promise()
+  var reports = await Report.scan().where('state').equals(1).exec().promise()
+  var bikes = await Bikes.scan().where('isMoving').equals(1).exec().promise()
+  var users = await Users.scan().where('activo').equals(1).exec().promise()
+
+  callback.send(JSON.stringify({
+    stations: stations,
+    reports: reports,
+    bikes: bikes,
+    users: users
+  }));
+}
+
+//report
+
+exports.closeReport = async function (req, res){
+  console.log(req.body)
+  if (!req.body) {
+    return res.status(400).send({
+      message: "Note content can not be empty"
+    });
+  }
+  
+
+  // Create a Station
+  Report.update({
+    uuidReport: req.body.uuidReport,
+    state: 2
+  }, function (err) {
+    if (err) {
+      console.log(err);
+      res.send(JSON.stringify({ message: "Actualización Incorrecta" }));
+    }
+    else {
+      res.send(JSON.stringify({ message: "Actualización Correcta" }));
+    }
+  
+  
+  });
+  
+}
+
+
+/* 
+{
+  "date": "2019-9-5|19:48:54",
+  "description": "report5",
+  "latitude": -12.106618,
+  "longitude": -77.050338,
+  "state": 1,
+  "uuidBike": "34534534534",
+  "uuidReport": "gaaaaaa5-d016-11e9-9817-21a0b47d0e37"
+}
+*/
+
+
+
+
 

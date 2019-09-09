@@ -10,26 +10,21 @@ dynamo.AWS.config.update({
   secretAccessKey: require("../../config.json").secretAccessKey, 
   region: require("../../config.json").Region});
   
-var Station = dynamo.define('tStations', {
-    hashKey : 'uuidStation',
+var Station = dynamo.define('tUsers', {
+    hashKey : 'uuidUser',
    
     // add the timestamp attributes (updatedAt, createdAt)
     timestamps : true,
    
     schema : {
-      uuidStation : Joi.string(),
-      address   : Joi.string(),
-      latitude    : Joi.number(),
-      longitude     : Joi.number(),
-      totalSlots   : Joi.number(),
-      availableSlots: Joi.number(),
-      createdAt : Joi.date()
+      uuidUser : Joi.string(),
+      activo   : Joi.number()
     }
   });
 
   
-  Station.config({tableName: 'tStations'});
+  Station.config({tableName: 'tUsers'});
 
-  module.exports = dynamo.model("tStations",Station);
+  module.exports = dynamo.model("tUsers",Station);
 
   
