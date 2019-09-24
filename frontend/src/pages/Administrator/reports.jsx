@@ -22,6 +22,8 @@ class ReportScreen extends React.Component {
       dataStations: undefined,
       dataReports: undefined,
       dataUsers: undefined,
+      totalBikes: undefined,
+      totaUsers: undefined,
       pages: 0,
       actualPage: 1
     };
@@ -56,9 +58,11 @@ class ReportScreen extends React.Component {
     try {
       const response = await api.report.reportElements();
       this.state.pages = Math.ceil(Math.ceil(response.reports[0].Count/3,0))
-
+      
       this.state.dataBikes = response.bikes[0].Count;
       this.state.dataUsers = response.users[0].Count;
+      this.state.totalBikes = response.bikes[0].ScannedCount;
+      this.state.totaUsers = response.users[0].ScannedCount;
       this.state.dataStations = response.stations[0].Count;
       this.setState({
         dataReports: response.reports[0].Items,
@@ -90,13 +94,13 @@ class ReportScreen extends React.Component {
               <CardSubtitle>
                 Bicicletas en uso{" "}
                 {this.state.dataBikes == undefined ? 0 : this.state.dataBikes}
+                {" / "}
+                {this.state.totalBikes}
               </CardSubtitle>
               <br />
               <CardSubtitle>
                 Estaciones{" "}
-                {this.state.dataStations == undefined
-                  ? 0
-                  : this.state.dataStations}
+                {this.state.dataStations == undefined? 0: this.state.dataStations}
               </CardSubtitle>
             </CardBody>
           </Card>
@@ -108,8 +112,11 @@ class ReportScreen extends React.Component {
             <CardBody>
               <br />
               <CardSubtitle>
-                {this.state.dataUsers == undefined ? 0 : this.state.dataUsers}{" "}
                 cuentas activas
+                {" "}
+                {this.state.dataUsers == undefined ? 0 : this.state.dataUsers}
+                {" / "}
+                  {this.state.totaUsers}
               </CardSubtitle>
             </CardBody>
           </Card>

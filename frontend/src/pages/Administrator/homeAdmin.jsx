@@ -31,7 +31,7 @@ class HomeAdmin extends React.Component {
 
       try {
         const response = await api.map.mapElements();
-  
+        this.state.dataGlobal = [] 
         response.bikes[0].Items.map((e)=>{
           this.state.dataGlobal.push({
             latitude: e.latitude,
@@ -97,7 +97,7 @@ class HomeAdmin extends React.Component {
     return (
       <div>
         <ReactMapGL
-          mapboxApiAccessToken=""
+          mapboxApiAccessToken="pk.eyJ1IjoibWVycmVuMjIiLCJhIjoiY2p2ZDVwOTRtMXdpMTN5bjMwazIxdmh3eCJ9.aKTpk-L5u8bBbGDoe6MkNQ"
           mapStyle={mapStyle}
           ref={map => (this.map = map)}
           {...this.state.viewport}
