@@ -6,7 +6,7 @@
   "dependencies": {
     "alert-node": "^1.2.6",
     "amazon-cognito-identity-js": "^3.0.15",
-    "aws-sdk": "^2.512.0",
+    "aws-sdk": "^2.814.0",
     "body-parser": "^1.19.0",
     "comment-json": "^2.1.0",
     "dynamodb": "^1.2.0",
