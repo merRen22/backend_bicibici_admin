@@ -17,7 +17,7 @@
     "classnames": "^2.2.6",
     "compression": "^1.7.4",
     "eon-map": "^1.2.2",
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "helmet": "^3.20.1",
     "mapbox": "^1.0.0-beta10",
     "mapbox-gl": "^1.3.0",
